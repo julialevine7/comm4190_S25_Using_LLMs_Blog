@@ -18,7 +18,7 @@
     "href": "index.html",
     "title": "My Explorations with LLMs",
     "section": "",
-    "text": "A test post\n\n\n\n\n\n\nLLMs\n\n\nprompting\n\n\nlogic\n\n\n\nAn example post from a Jupyter notebook\n\n\n\n\n\nFeb 2, 2024\n\n\nAn LLM User\n\n\n\n\n\n\nNo matching items"
+    "text": "Julia’s post #1\n\n\n\n\n\n\nunsure!\n\n\n\nJulia’s first post for comm class\n\n\n\n\n\nJan 29, 2025\n\n\nJulia Levine\n\n\n\n\n\n\n\n\n\n\n\n\nA test post\n\n\n\n\n\n\nLLMs\n\n\nprompting\n\n\nlogic\n\n\n\nAn example post from a Jupyter notebook\n\n\n\n\n\nFeb 2, 2024\n\n\nAn LLM User\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html",
@@ -26,12 +26,5 @@
     "title": "About",
     "section": "",
     "text": "Hi this is Julia"
-  },
-  {
-    "objectID": "posts/001_/first post.html",
-    "href": "posts/001_/first post.html",
-    "title": "My Explorations with LLMs",
-    "section": "",
-    "text": "---\ntitle: \"Julia's post #1\"\ndescription: \"Julia's first post for comm class\"\nauthor: \"Julia Levine\"\ndate: \"1/29/2025\"\ncategories:\n  - unsure!\n---"
   }
 ]
