@@ -1,8 +1,8 @@
 ---
 title: About
-image: profile.jpg
+image: dalle profile pic.jpg
 about:
   template: jolla
 ---
 
-Hi this is Julia
+What's up! I'm Julia Levine, a current student in COMM 4190. I am interested in learning more about LLM limitations and expansions, especially with neural network creation and training. Take a peak at my blog for some of my personal investigations!
