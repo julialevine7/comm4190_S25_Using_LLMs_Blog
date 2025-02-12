@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://julialevine7.github.io/comm4190_S25_Using_LLMs_Blog/posts/001_med_advice/humansvsdogs.html</loc>
-    <lastmod>2025-02-05T21:08:16.729Z</lastmod>
+    <loc>https://julialevine7.github.io/comm4190_S25_Using_LLMs_Blog/index.html</loc>
+    <lastmod>2025-02-12T20:48:41.723Z</lastmod>
   </url>
   <url>
-    <loc>https://julialevine7.github.io/comm4190_S25_Using_LLMs_Blog/index.html</loc>
-    <lastmod>2025-02-05T21:08:16.719Z</lastmod>
+    <loc>https://julialevine7.github.io/comm4190_S25_Using_LLMs_Blog/posts/003_pronunce_spell/pronunce_spell.html</loc>
+    <lastmod>2025-02-12T20:48:41.747Z</lastmod>
   </url>
   <url>
     <loc>https://julialevine7.github.io/comm4190_S25_Using_LLMs_Blog/about.html</loc>
-    <lastmod>2025-02-05T21:08:16.719Z</lastmod>
+    <lastmod>2025-02-12T20:48:41.722Z</lastmod>
   </url>
   <url>
     <loc>https://julialevine7.github.io/comm4190_S25_Using_LLMs_Blog/posts/002_robocalls/robocalls.html</loc>
-    <lastmod>2025-02-05T21:08:16.729Z</lastmod>
+    <lastmod>2025-02-12T20:48:41.733Z</lastmod>
+  </url>
+  <url>
+    <loc>https://julialevine7.github.io/comm4190_S25_Using_LLMs_Blog/posts/001_med_advice/humansvsdogs.html</loc>
+    <lastmod>2025-02-12T20:48:41.733Z</lastmod>
   </url>
 </urlset>

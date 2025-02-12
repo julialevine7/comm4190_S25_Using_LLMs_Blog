@@ -6,8 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Julia Levine">
+<meta name="dcterms.date" content="2025-02-12">
+<meta name="description" content="How well do these models offer spelling and pronunciation of common words?">
 
-<title>My Explorations with LLMs</title>
+<title>gpt-4o vs.&nbsp;deepseek: Spelling and Pronunciation – My Explorations with LLMs</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,24 +26,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-5c67a7444eebc356e54fdce0a63e8750.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-5c67a7444eebc356e54fdce0a63e8750.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,77 +69,19 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
 
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">My Explorations with LLMs</span>
     </a>
   </div>
@@ -149,7 +92,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
@@ -172,149 +115,74 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">My Explorations with LLMs</h1>
-                      </div>
+    <div class="quarto-title column-body">
+      <h1 class="title">gpt-4o vs.&nbsp;deepseek: Spelling and Pronunciation</h1>
+                  <div>
+        <div class="description">
+          How well do these models offer spelling and pronunciation of common words?
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Grammar</div>
+              </div>
+                  </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page-left">
+  <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Julia Levine </p>
+            </div>
+    </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">February 12, 2025</p>
+      </div>
+    </div>
     
       
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(3)</span></div><div class="category" data-category="QVBJ">API <span class="quarto-category-count">(1)</span></div><div class="category" data-category="R3JhbW1hcg==">Grammar <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SHVtYW5pdHk=">Humanity <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TExNcw==">LLMs <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TWVkaWNhbCUyMEFkdmljZQ==">Medical Advice <span class="quarto-category-count">(1)</span></div></div></div>
+    
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
 
+<section id="spelling-and-pronunciation-in-llms-how-well-can-a-text-based-service-offer-phonetic-pronunciations" class="level2">
+<h2 class="anchored" data-anchor-id="spelling-and-pronunciation-in-llms-how-well-can-a-text-based-service-offer-phonetic-pronunciations">Spelling and Pronunciation in LLMs: How well can a text-based service offer phonetic pronunciations?</h2>
+<p>In my seemingly simplistic question, I aimed to compard gpt-4o and deepseek in offering a pronunciation and spelling based off of the pronunciation of the word “strawberry”. This word was chosen based off of its infamous use in LLM testing when asking how many “r”s are present in the word. As an interesting add-on, I chose to attach this question at the end of my queries.</p>
+<p><em>gpt-4o</em> When asking gpt-4o to pronounce the word “strawberry” it came up with a seemingly accurate representation of the word phoenetically, even advancing to explain each morpheme (to which I tastefully disagree with in my New York accent). However, according to the Oxford Dictionary, this pronunciation is not 100% accurate, with /’strôbərē/ being the correct phonetic transcription.</p>
+<p>Next, I asked gpt-4o to take its own phonetic transcription and re-translate it back into a word. I was curious to see whether or not it would choose the original word “strawberry” or its supposed phonetic sounding out of “strawberee”. Unsurprisingly, it easily was able to reconnect back to the original word, yet still failing at the classic “r” counts.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="pronunce_spell_files/figure-html/8f9fc28a-3457-4449-a593-a352e5de5b72-1-603f4061-5548-47d5-a971-d3fc7ae0efc5.png" class="img-fluid figure-img"></p>
+<figcaption>Screenshot 2025-02-12 at 3.20.36 PM.png</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="pronunce_spell_files/figure-html/b74b18e2-3033-4f08-84c7-f5d7dfe91430-1-844d013c-218e-4d52-bd39-74c55d555421.png" class="img-fluid figure-img"></p>
+<figcaption>Screenshot 2025-02-12 at 3.20.44 PM.png</figcaption>
+</figure>
+</div>
+<p><img src="pronunce_spell_files/figure-html/3f244938-2ca5-4d9b-82af-2ebf7b6809d2-1-2c447244-2e45-4d02-a299-3a5f297bcba1.png" class="img-fluid" alt="Screenshot 2025-02-12 at 3.24.00 PM.png"><img src="pronunce_spell_files/figure-html/3f244938-2ca5-4d9b-82af-2ebf7b6809d2-3-63bbc038-1b13-4ccd-941b-6d401b982213.png" class="img-fluid" alt="Screenshot 2025-02-12 at 3.24.10 PM.png"><img src="pronunce_spell_files/figure-html/3f244938-2ca5-4d9b-82af-2ebf7b6809d2-2-4ea26a1b-6608-47bd-97fa-bbe5308db384.png" class="img-fluid" alt="Screenshot 2025-02-12 at 3.24.20 PM.png"></p>
 
 
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="R3JhbW1hcg==" data-listing-date-sort="1739318400000" data-listing-file-modified-sort="1739393321747" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="202">
-<div class="thumbnail">
-<p><a href="./posts/003_pronunce_spell/pronunce_spell.html" class="no-external"></a></p><a href="./posts/003_pronunce_spell/pronunce_spell.html" class="no-external">
-<p class="card-img-top"><img src="posts/003_pronunce_spell/pronunce_spell_files/figure-html/8f9fc28a-3457-4449-a593-a352e5de5b72-1-603f4061-5548-47d5-a971-d3fc7ae0efc5.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/003_pronunce_spell/pronunce_spell.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/003_pronunce_spell/pronunce_spell.html" class="no-external">gpt-4o vs.&nbsp;deepseek: Spelling and Pronunciation</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/003_pronunce_spell/pronunce_spell.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('R3JhbW1hcg=='); return false;">
-Grammar
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/003_pronunce_spell/pronunce_spell.html" class="no-external">How well do these models offer spelling and pronunciation of common words?</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/003_pronunce_spell/pronunce_spell.html" class="no-external">
-<div class="listing-date">
-Feb 12, 2025
-</div>
-<div class="listing-author">
-Julia Levine
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="TExNcyUyQ0FQSQ==" data-listing-date-sort="1738713600000" data-listing-file-modified-sort="1739393321733" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
-<div class="thumbnail">
-<p><a href="./posts/002_robocalls/robocalls.html" class="no-external"></a></p><a href="./posts/002_robocalls/robocalls.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/002_robocalls/robocalls.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/002_robocalls/robocalls.html" class="no-external">AI Robocalls</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/002_robocalls/robocalls.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('TExNcw=='); return false;">
-LLMs
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('QVBJ'); return false;">
-API
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/002_robocalls/robocalls.html" class="no-external">Using API to generate robocalls</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/002_robocalls/robocalls.html" class="no-external">
-<div class="listing-date">
-Feb 5, 2025
-</div>
-<div class="listing-author">
-Julia Levine
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="TWVkaWNhbCUyMEFkdmljZSUyQ0h1bWFuaXR5" data-listing-date-sort="1738713600000" data-listing-file-modified-sort="1739393321733" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="283">
-<div class="thumbnail">
-<p><a href="./posts/001_med_advice/humansvsdogs.html" class="no-external"></a></p><a href="./posts/001_med_advice/humansvsdogs.html" class="no-external">
-<p class="card-img-top"><img src="posts/001_med_advice/humansvsdogs_files/figure-html/fa62b99b-33a0-4716-8551-4ec5dd85179b-1-a82edc8c-673f-4974-9021-7deea085fccc.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/001_med_advice/humansvsdogs.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/001_med_advice/humansvsdogs.html" class="no-external">gpt-4o Medical Advice: Dogs vs.&nbsp;Humans</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/001_med_advice/humansvsdogs.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('TWVkaWNhbCUyMEFkdmljZQ=='); return false;">
-Medical Advice
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('SHVtYW5pdHk='); return false;">
-Humanity
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/001_med_advice/humansvsdogs.html" class="no-external">How well does gpt-4o address giving medical advice?</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/001_med_advice/humansvsdogs.html" class="no-external">
-<div class="listing-date">
-Feb 5, 2025
-</div>
-<div class="listing-author">
-Julia Levine
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
