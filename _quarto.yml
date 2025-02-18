@@ -11,7 +11,7 @@ website:
         
 format:
   html:
-    theme: morph
+    theme: vapor
     css: styles.css
 
 execute:
