@@ -2,9 +2,6 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/004_predictive_inferences/predictive_inferences.html",
-      "/posts/003_pronunce_spell/pronunce_spell.html",
-      "/posts/002_robocalls/robocalls.html",
       "/posts/001_med_advice/humansvsdogs.html"
     ]
   }
