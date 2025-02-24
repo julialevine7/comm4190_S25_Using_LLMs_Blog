@@ -4,14 +4,7 @@
     "href": "index.html",
     "title": "Experimenting with LLMs",
     "section": "",
-    "text": "gpt-4o Medical Advice: Dogs vs. Humans\n\n\n\n\n\n\nMedical Advice\n\n\nHumanity\n\n\n\nHow well does gpt-4o address giving medical advice?\n\n\n\n\n\nFeb 5, 2025\n\n\nJulia Levine\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "What’s up! I’m Julia Levine, a current student in COMM 4190. I am interested in learning more about LLM limitations and expansions, especially with neural network creation and training. Take a peak at my blog for some of my personal investigations!"
+    "text": "How well can LLMs describe basic shapes?\n\n\n\n\n\n\nImage Generation\n\n\n\nWe all know that image generation through LLMs isn’t always intuitive, so how well can these LLMs describe the shapes via prompting?\n\n\n\n\n\nFeb 20, 2025\n\n\nJulia Levine\n\n\n\n\n\n\n\n\n\n\n\n\nLLMs v. LLMs: Rating LLM Effectiveness Using Other LLMs\n\n\n\n\n\n\nLLMs\n\n\n\nHow effective does ChatGPT think Deepseek is? How about the other way around?\n\n\n\n\n\nFeb 20, 2025\n\n\nJulia Levine\n\n\n\n\n\n\n\n\n\n\n\n\nPredictive Inferences of gpt-4o: Everyday Essentials\n\n\n\n\n\n\nPredictions\n\n\n\nHow well can gpt-4o predict my day with little to no information?\n\n\n\n\n\nFeb 17, 2025\n\n\nJulia Levine\n\n\n\n\n\n\n\n\n\n\n\n\ngpt-4o vs. deepseek: Spelling and Pronunciation\n\n\n\n\n\n\nGrammar\n\n\n\nHow well do these models offer spelling and pronunciation of common words?\n\n\n\n\n\nFeb 12, 2025\n\n\nJulia Levine\n\n\n\n\n\n\n\n\n\n\n\n\ngpt-4o Medical Advice: Dogs vs. Humans\n\n\n\n\n\n\nMedical Advice\n\n\nHumanity\n\n\n\nHow well does gpt-4o address giving medical advice?\n\n\n\n\n\nFeb 5, 2025\n\n\nJulia Levine\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/001_med_advice/humansvsdogs.html",
@@ -26,5 +19,47 @@
     "title": "gpt-4o Medical Advice: Dogs vs. Humans",
     "section": "",
     "text": "What tone and directive advice does it give when asking about minor injuries for dogs compared to humans?\n\n\n\nScreenshot 2025-02-05 at 2.34.18 PM.png\n\n\nFirst, when asking about medical advice for a minor injury related to the self (human), gpt-4o is quick to appeal to the person’s emotions, then moving to a list of care advice. This list includes injury assessment and various external and internal care actions that are home-based, including long-term care like taping and footwear adjustment. It then closes out with seeking further medical evaluation after a few days of constant pain.\n\n\n\nScreenshot 2025-02-05 at 2.38.40 PM.png\n\n\nComparatively, when asking for the same medical advice, but this time for a dog, gpt-4o takes a less face-to-face approach, instead apologizing for the incident rather than appealing to the dog. The care is also directed towards the human’s behavior and demeanor, rather than calming the dog down. The medical care for the dog also seems a bit less informed and therefore more severe, such as cleaning the area and monitoring for infection, which the human advice does not really account for. Additionally, included in the list of care is visiting the vet, which gpt-4o only suggests for humans after several days of consistant pain.\nComparative Analysis\nWhen comparing gpt-4o’s responses between human and dog medical advice, gpt-4o seems to take a more human-based approach to both, accurately caring for the human wound, but being a bit less accurate with the dog wound. Both have similar outcomes in terms of visiting a doctor in the event of lasting pain, however the human response addresses this as a last resort, whereas the dog response is more suggestive of immediate vet care, which can be expensive and completely unnecessary."
+  },
+  {
+    "objectID": "posts/002_pronunce_spell/pronunce_spell.html",
+    "href": "posts/002_pronunce_spell/pronunce_spell.html",
+    "title": "gpt-4o vs. deepseek: Spelling and Pronunciation",
+    "section": "",
+    "text": "In my seemingly simplistic question, I aimed to compard gpt-4o and deepseek in offering a pronunciation and spelling based off of the pronunciation of the word “strawberry”. This word was chosen based off of its infamous use in LLM testing when asking how many “r”s are present in the word. As an interesting add-on, I chose to attach this question at the end of my queries.\ngpt-4o\nWhen asking gpt-4o to pronounce the word “strawberry” it came up with a seemingly accurate representation of the word phoenetically, even advancing to explain each morpheme (to which I tastefully disagree with in my New York accent). However, according to the Oxford Dictionary, this pronunciation is not 100% accurate, with /’strôbərē/ being the correct phonetic transcription.\nNext, I asked gpt-4o to take its own phonetic transcription and re-translate it back into a word. I was curious to see whether or not it would choose the original word “strawberry” or its supposed phonetic sounding out of “strawberee”. Unsurprisingly, it easily was able to reconnect back to the original word, yet still failing at the classic “r” counts.\n\n\n\nScreenshot 2025-02-12 at 3.20.36 PM.png\n\n\n\n\n\nScreenshot 2025-02-12 at 3.20.44 PM.png\n\n\ndeepseek\nAsking deepseek the same exact questions, I get an alarming first response. Apparently strawberry can be pronounced struh-r-een, which I am unsure exactly how this was processed. My current guess is that this is somehow the spelling of strawberry in an undisclosed language, which would make it a logical “pronunciation”. However, I cannot currently find a language spelling strawberry in this manner.\nGoing along the same route, I ask deepseek to respell the word based on its own pronunciation, to which it digs a deeper hole by claiming that “strawberry” is actually a MISSPELLING of the word!! I am baffled by this response but also completely amazed! To me, my questions were very straightforward, and almost revealed the answer from the start, yet deepseek seems to really struggle in this way.\nEnding with a bang, deepseek also both miscounts and misplaces the instances of “r” in the word strawberry (struendyer).\n\nI find this outcome completely fascinating. I originally thought my testing of pronunciations with LLMs was a simple and potentially unuseful experiment, however I was quickly proven wrong. I am eager to test the limitations of this example further with more models."
+  },
+  {
+    "objectID": "posts/002_pronunce_spell/pronunce_spell.html#spelling-and-pronunciation-in-llms-how-well-can-a-text-based-service-offer-phonetic-pronunciations",
+    "href": "posts/002_pronunce_spell/pronunce_spell.html#spelling-and-pronunciation-in-llms-how-well-can-a-text-based-service-offer-phonetic-pronunciations",
+    "title": "gpt-4o vs. deepseek: Spelling and Pronunciation",
+    "section": "",
+    "text": "In my seemingly simplistic question, I aimed to compard gpt-4o and deepseek in offering a pronunciation and spelling based off of the pronunciation of the word “strawberry”. This word was chosen based off of its infamous use in LLM testing when asking how many “r”s are present in the word. As an interesting add-on, I chose to attach this question at the end of my queries.\ngpt-4o\nWhen asking gpt-4o to pronounce the word “strawberry” it came up with a seemingly accurate representation of the word phoenetically, even advancing to explain each morpheme (to which I tastefully disagree with in my New York accent). However, according to the Oxford Dictionary, this pronunciation is not 100% accurate, with /’strôbərē/ being the correct phonetic transcription.\nNext, I asked gpt-4o to take its own phonetic transcription and re-translate it back into a word. I was curious to see whether or not it would choose the original word “strawberry” or its supposed phonetic sounding out of “strawberee”. Unsurprisingly, it easily was able to reconnect back to the original word, yet still failing at the classic “r” counts.\n\n\n\nScreenshot 2025-02-12 at 3.20.36 PM.png\n\n\n\n\n\nScreenshot 2025-02-12 at 3.20.44 PM.png\n\n\ndeepseek\nAsking deepseek the same exact questions, I get an alarming first response. Apparently strawberry can be pronounced struh-r-een, which I am unsure exactly how this was processed. My current guess is that this is somehow the spelling of strawberry in an undisclosed language, which would make it a logical “pronunciation”. However, I cannot currently find a language spelling strawberry in this manner.\nGoing along the same route, I ask deepseek to respell the word based on its own pronunciation, to which it digs a deeper hole by claiming that “strawberry” is actually a MISSPELLING of the word!! I am baffled by this response but also completely amazed! To me, my questions were very straightforward, and almost revealed the answer from the start, yet deepseek seems to really struggle in this way.\nEnding with a bang, deepseek also both miscounts and misplaces the instances of “r” in the word strawberry (struendyer).\n\nI find this outcome completely fascinating. I originally thought my testing of pronunciations with LLMs was a simple and potentially unuseful experiment, however I was quickly proven wrong. I am eager to test the limitations of this example further with more models."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "What’s up! I’m Julia Levine, a current student in COMM 4190. I am interested in learning more about LLM limitations and expansions, especially with neural network creation and training. Take a peak at my blog for some of my personal investigations!"
+  },
+  {
+    "objectID": "posts/004_preparednedd/preparedness.html",
+    "href": "posts/004_preparednedd/preparedness.html",
+    "title": "Experimenting with LLMs",
+    "section": "",
+    "text": "---\ntitle: \"Are LLMs Overprepared or Underprepared?\"\ndescription: \"When packing for a 4-day trip, does gpt-4o remember to bring an extra pair of socks?\"\nauthor: \"Julia Levine\"\ndate: \"2/20/2025\"\ncategories:\n  - Predictions\n---"
+  },
+  {
+    "objectID": "posts/003_predictive_inferences/predictive_inferences.html",
+    "href": "posts/003_predictive_inferences/predictive_inferences.html",
+    "title": "Predictive Inferences of gpt-4o: Everyday Essentials",
+    "section": "",
+    "text": "It’s a standard Monday afternoon and I have two classes and a lot of studying to do. I’m sitting here sipping on my iced matcha and I’m wondering what comes next. I may not have all the answers, but can gpt-4o divinate some for me?"
+  },
+  {
+    "objectID": "posts/003_predictive_inferences/predictive_inferences.html#how-well-can-gpt-4o-predict-the-rest-of-my-day",
+    "href": "posts/003_predictive_inferences/predictive_inferences.html#how-well-can-gpt-4o-predict-the-rest-of-my-day",
+    "title": "Predictive Inferences of gpt-4o: Everyday Essentials",
+    "section": "",
+    "text": "It’s a standard Monday afternoon and I have two classes and a lot of studying to do. I’m sitting here sipping on my iced matcha and I’m wondering what comes next. I may not have all the answers, but can gpt-4o divinate some for me?"
   }
 ]

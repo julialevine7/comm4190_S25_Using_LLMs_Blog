@@ -2,6 +2,11 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/004_preparednedd/preparedness.html",
+      "/posts/005_describing_shapes/shapes.html",
+      "/posts/006_effectiveness/effectiveness.html",
+      "/posts/003_predictive_inferences/predictive_inferences.html",
+      "/posts/002_pronunce_spell/pronunce_spell.html",
       "/posts/001_med_advice/humansvsdogs.html"
     ]
   }
