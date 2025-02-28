@@ -23,6 +23,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -41,7 +75,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b53751a350365c71b6c909e95f209ed1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-56d7f9e39eec49f72d85f3c29c2651cc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-db06b0bcb897ef5043d1075a07c1b116.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -155,8 +189,244 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<p>LLMs are known to have very different response styles and accuracy when comparing text prompts to image creation or image analysis. Sometimes very fundamental truths can be stretched, and I am curious to find out whether or not Anthropic and Gemini differ in their descriptions of a circle when prompted textually compared to visually.</p>
+<p>I will start with prompting Anthropic and Gemini with text first, then I will upload an image of a circle and ask them to describe the image the same way, comparing the response types.</p>
+<p>This could reveal important information behind how these models respond to text and visual prompting, where text responses could be more detail and information-oriented, and visual responses could be more aesthetically-focused.</p>
+<section id="anthropic" class="level2">
+<h2 class="anchored" data-anchor-id="anthropic">Anthropic</h2>
+<p>How well can Anthropic describe shapes with no image prompting?</p>
+<div id="33113001-61d9-4e88-83b2-2954715a3bb6" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> anthropic <span class="im">import</span> Anthropic</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> base64</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> httpx</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display, Image, Markdown</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># load api keys</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> load_dotenv()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="c76f972d-2e7c-4485-b6b0-c9f520e6ffdd" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> Anthropic()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="86076f77-49ed-4db7-a28c-2a045ae0fb1b" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> model <span class="kw">in</span> client.models.<span class="bu">list</span>().data:</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(model.<span class="bu">id</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>claude-3-7-sonnet-20250219
+claude-3-5-sonnet-20241022
+claude-3-5-haiku-20241022
+claude-3-5-sonnet-20240620
+claude-3-haiku-20240307
+claude-3-opus-20240229
+claude-3-sonnet-20240229
+claude-2.1
+claude-2.0</code></pre>
+</div>
+</div>
+<div id="f81157e8-4048-4604-b7ef-b9b9644d5dff" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>OPUS <span class="op">=</span> <span class="st">'claude-3-opus-20240229'</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>SONNET <span class="op">=</span> <span class="st">'claude-3-5-sonnet-20241022'</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>HAIKU <span class="op">=</span> <span class="st">'claude-3-5-haiku-20241022'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="1981bd8c-1662-409b-8f4e-718b5f383f07" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>message <span class="op">=</span> client.messages.create(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span>HAIKU,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    max_tokens<span class="op">=</span><span class="dv">1000</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    temperature<span class="op">=</span><span class="fl">0.0</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    system<span class="op">=</span><span class="st">"You are a helpful assistant."</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    messages<span class="op">=</span>[</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="st">"Can you please describe, in as much detail as possible, what a circle is?"</span>}</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(message.content[<span class="dv">0</span>].text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>A circle is a fundamental geometric shape defined as a set of points in a plane that are all equidistant from a central point, called the center. Here's a detailed description:
+
+Geometric Properties:
+- Perfectly round and symmetrical
+- Two-dimensional shape
+- Has no corners or edges
+- Continuous and smooth curve
+
+Key Components:
+1. Center Point
+- The fixed point from which all points on the circle's circumference are the same distance
+- Located at the middle of the circle
+
+2. Radius
+- A line segment from the center to any point on the circumference
+- All radii in a circle are exactly equal in length
+- Determines the circle's size
+
+3. Circumference
+- The complete outer boundary of the circle
+- Length calculated by the formula: 2πr (where r is the radius)
+- Represents the total distance around the circle
+
+4. Diameter
+- A line segment passing through the center
+- Connects two points on the circumference
+- Always twice the length of the radius
+- Splits the circle exactly in half
+
+Mathematical Characteristics:
+- Perfect symmetry
+- Infinite points of rotation
+- Area calculated by πr²
+- Perimeter calculated by 2πr
+
+Circles are fundamental in mathematics, engineering, design, and many natural phenomena.</code></pre>
+</div>
+</div>
+<div id="26cf76c0-d036-486e-ae68-6f78049d4a39" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> encode_image(image_path):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">with</span> <span class="bu">open</span>(image_path, <span class="st">"rb"</span>) <span class="im">as</span> image_file:</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> base64.b64encode(image_file.read()).decode(<span class="st">'utf-8'</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>circle <span class="op">=</span> encode_image(<span class="st">'circle.png'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="257c5c61-5479-4ba6-9c0a-0ea4da4eb5a4" class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>message <span class="op">=</span> client.messages.create(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span>HAIKU,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    max_tokens<span class="op">=</span><span class="dv">1024</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    messages<span class="op">=</span>[</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>            <span class="st">"role"</span>: <span class="st">"user"</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>            <span class="st">"content"</span>: [</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>                {</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"type"</span>: <span class="st">"image"</span>,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"source"</span>: {</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"type"</span>: <span class="st">"base64"</span>,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"media_type"</span>: <span class="st">'image/png'</span>,</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"data"</span>: circle,</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>                    },</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>                },</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>                {</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"type"</span>: <span class="st">"text"</span>,</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"text"</span>: <span class="st">"Can you please describe what the image is in as much detail as possible?"</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>                }</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>            ],</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    ],</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(message)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Message(id='msg_01DYjQ9m9qw7J2xadWLazebi', content=[TextBlock(citations=None, text='The image shows a simple, perfect circle drawn with a black outline on a white background. The circle is symmetrical, with a uniform line weight and crisp, clean edges. Its diameter appears to be consistent throughout, creating a precise geometric shape. There are no additional details, patterns, or markings within the circle - it is a basic, minimalist representation of a circle.', type='text')], model='claude-3-5-haiku-20241022', role='assistant', stop_reason='end_turn', stop_sequence=None, type='message', usage=Usage(cache_creation_input_tokens=0, cache_read_input_tokens=0, input_tokens=126, output_tokens=80))</code></pre>
+</div>
+</div>
+</section>
+<section id="gemini" class="level2">
+<h2 class="anchored" data-anchor-id="gemini">Gemini</h2>
+<p>How well can Gemini describe shapes compared to Anthropic?</p>
+<div id="3fef057a-3ad3-45c3-a4c7-9ce84ae96d06" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> google.generativeai <span class="im">as</span> genai</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Image, display, Markdown</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> load_dotenv()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="202eae40-de94-46d4-ad94-c0bd423467e7" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>genai.configure()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="38c26f41-60c6-4daf-ada6-4fa93fa413eb" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> genai.GenerativeModel(model_name<span class="op">=</span><span class="st">"models/gemini-1.5-pro-latest"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> model.generate_content(<span class="st">"Can you please describe, in as much detail as possible, what a circle is?"</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>A circle is a fundamental geometric shape defined as follows:
+
+**Formal Definition:**
+
+A circle is the set of all points in a plane that are equidistant from a given point called the *center*.  The constant distance between the center and any point on the circle is called the *radius*.
+
+**Key Properties and Features:**
+
+* **Center:** The fixed point in the plane from which all points on the circle are equidistant.
+* **Radius (r):**  The distance between the center and any point on the circle.  It's a crucial defining characteristic.  All radii within a given circle are of equal length.
+* **Diameter (d):** A line segment that passes through the center and whose endpoints lie on the circle.  The diameter is twice the length of the radius (d = 2r).
+* **Circumference (C):** The distance around the circle.  It's calculated using the formula C = 2πr or C = πd, where π (pi) is a mathematical constant approximately equal to 3.14159.
+* **Area (A):** The region enclosed by the circle.  It's calculated using the formula A = πr².
+* **Chord:** A line segment whose endpoints lie on the circle. The diameter is the longest chord in a circle.
+* **Secant:** A line that intersects the circle at two distinct points.
+* **Tangent:** A line that intersects the circle at exactly one point, called the point of tangency.  The tangent line is perpendicular to the radius drawn to the point of tangency.
+* **Arc:** A portion of the circumference of a circle.
+* **Sector:** A region bounded by two radii and an arc of the circle.  It's like a "slice of pie."
+* **Segment:** A region bounded by a chord and an arc of the circle.
+* **Concentric Circles:** Circles that share the same center but have different radii.
+* **Unit Circle:** A circle with a radius of 1.  It's frequently used in trigonometry.
+
+**Equation of a Circle:**
+
+In a Cartesian coordinate system, the equation of a circle with center (h, k) and radius r is given by:
+
+(x - h)² + (y - k)² = r²
+
+If the center is at the origin (0,0), the equation simplifies to:
+
+x² + y² = r²
 
 
+**Relationships and Applications:**
+
+Circles appear throughout mathematics and the real world.  They are integral to:
+
+* **Geometry:**  Used in countless geometric constructions and theorems.
+* **Trigonometry:** The unit circle defines trigonometric functions.
+* **Calculus:**  Used in calculating areas, volumes, and other properties of curved shapes.
+* **Physics:**  Represent orbits, waves, and other natural phenomena.
+* **Engineering:**  Used in designing wheels, gears, and other circular structures.
+* **Art and Design:**  Used for aesthetic purposes and creating visually appealing patterns.
+
+
+This detailed description should provide a comprehensive understanding of what a circle is and its various properties and applications.
+</code></pre>
+</div>
+</div>
+<div id="48a67302-0192-4734-8048-df9ba80c6b15" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>sample_file <span class="op">=</span> genai.upload_file(path<span class="op">=</span><span class="st">"circle.png"</span>,</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>                                display_name<span class="op">=</span><span class="st">"circle"</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Uploaded file '</span><span class="sc">{</span>sample_file<span class="sc">.</span>display_name<span class="sc">}</span><span class="ss">' as: </span><span class="sc">{</span>sample_file<span class="sc">.</span>uri<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Uploaded file 'circle' as: https://generativelanguage.googleapis.com/v1beta/files/fmd3frbfwft5</code></pre>
+</div>
+</div>
+<div id="0d788df7-28f5-40d2-81ea-c7df155cc282" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> genai.GenerativeModel(model_name<span class="op">=</span><span class="st">"models/gemini-1.5-pro-latest"</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> model.generate_content([<span class="st">"Can you please describe what the image is in as much detail as possible?"</span>, sample_file])</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The image is a simple, unfilled black circle on a white background. The circle's line is of uniform thickness and appears to be perfectly smooth, with no breaks or variations in its width.  There are no other elements or markings within or outside the circle.  The background is a solid, untextured white.</code></pre>
+</div>
+</div>
+</section>
+<section id="discussion" class="level2">
+<h2 class="anchored" data-anchor-id="discussion">Discussion</h2>
+<p>When comparing Anthropic and Gemini, their response tones appear very similar when grouping between text and image prompting.</p>
+</section>
+<section id="text-prompting" class="level1">
+<h1>Text Prompting</h1>
+<p>For both LLMs, the text responses for describing a circle were highly mathematical, with descriptors of applications towards identifying circles, creating circles, and using circles in relational fields such as physics.</p>
+<p>I deemed this to be an accurate and highly education-based response, even teaching me some new things about the properties of a circle.</p>
+</section>
+<section id="image-prompting" class="level1">
+<h1>Image Prompting</h1>
+<p>Opposingly, when presenting a standard image of a circle from Wikipedia, both LLMs took a significantly more relaxed approach. Both the text and image prompts included the words “in as much detail as possible”, yet the text response was several paragraphs long and the image response was 2-3 sentences long.</p>
+<p>The image response included details on thickness and color, with nothing much else about the image’s properties or applications, let along identification.</p>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>It seems as though these LLMs’ image identification is much less adaptive than the text response, where it seems that both LLMs were able to quickly move past the idea of a text-based circle and include highly-educated responses, yet image-based circles seemed to get stuck in the identification phase.</p>
+<p>In this way, this is highly descriptive of many of the problems seen in LLM-based image identification and creation. Text-based responses are not immune to hallucinations or inconsistencies, however it seems as though the reasoning behind text-based responses are more developed and accurate than image-based responses.</p>
+<p>I am curious to see if emerging new models have this same similar issue, or if this remains a problem in the base theories behind image identification and generation in LLMs. Theoretically, I believe these LLMs should be tuned to identify some base images, including a circle, so that when I present an image of a circle, it can describe thickness and colors as well as its mathematical applications.</p>
+
+
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
