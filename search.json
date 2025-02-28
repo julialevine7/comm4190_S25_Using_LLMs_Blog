@@ -25,7 +25,7 @@
     "href": "posts/005_describing_shapes/shapes.html#discussion",
     "title": "How well can LLMs describe basic shapes?",
     "section": "Discussion",
-    "text": "Discussion\nWhen comparing Anthropic and Gemini, their response tones appear very similar when grouping between text and image prompting."
+    "text": "Discussion\nWhen comparing Anthropic and Gemini, their response tones appear very similar when grouping between text and image prompting.\n\nText Prompting\nFor both LLMs, the text responses for describing a circle were highly mathematical, with descriptors of applications towards identifying circles, creating circles, and using circles in relational fields such as physics.\nI deemed this to be an accurate and highly education-based response, even teaching me some new things about the properties of a circle.\n\n\nImage Prompting\nOpposingly, when presenting a standard image of a circle from Wikipedia, both LLMs took a significantly more relaxed approach. Both the text and image prompts included the words “in as much detail as possible”, yet the text response was several paragraphs long and the image response was 2-3 sentences long.\nThe image response included details on thickness and color, with nothing much else about the image’s properties or applications, let along identification."
   },
   {
     "objectID": "posts/005_describing_shapes/shapes.html#conclusion",
