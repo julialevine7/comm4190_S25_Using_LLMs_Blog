@@ -8,7 +8,7 @@
 
 <meta name="author" content="Julia Levine">
 <meta name="dcterms.date" content="2025-02-17">
-<meta name="description" content="When packing for a 4-day trip, does gpt-4o remember to bring an extra pair of socks?">
+<meta name="description" content="When packing for a 3-day trip, does gpt-3.5-turbo remember to bring an extra pair of socks?">
 
 <title>Are LLMs Overprepared or Underprepared? – Experimenting with LLMs</title>
 <style>
@@ -22,6 +22,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -114,7 +148,7 @@ ul.task-list li input[type="checkbox"] {
       <h1 class="title">Are LLMs Overprepared or Underprepared?</h1>
                   <div>
         <div class="description">
-          When packing for a 4-day trip, does gpt-4o remember to bring an extra pair of socks?
+          When packing for a 3-day trip, does gpt-3.5-turbo remember to bring an extra pair of socks?
         </div>
       </div>
                           <div class="quarto-categories">
@@ -155,8 +189,122 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<p>How well can gpt-3.5-turbo predict the future? And by the future, I mean what I should have packed for my 3 day trip to Florida to visit my Grandma.</p>
+<div id="2dcd9464-19f5-4fa3-a7c0-89063ad24424" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> base64</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Load API key</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> load_dotenv()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="2131ee79-422e-4a23-bd57-af40be66ab49" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> OpenAI()</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>completion <span class="op">=</span> client.chat.completions.create(</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  model<span class="op">=</span><span class="st">"gpt-3.5-turbo"</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  messages<span class="op">=</span>[</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"system"</span>, </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>     <span class="st">"content"</span>: <span class="st">"You are a helpful assistant."</span>},</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"user"</span>, </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>     <span class="st">"content"</span>: <span class="st">"I'm packing for a 3 day trip to Florida. Please make me a packing list."</span>}</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> completion.choices[<span class="dv">0</span>].message.content</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="8bcd2f25-3510-42cc-aa33-9ca274149620" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Sure! Here's a packing list for your 3-day trip to Florida:
+
+Clothing:
+- Lightweight tops
+- Shorts
+- Bathing suits
+- Sandals
+- Hat
+- Sunglasses
+- Pajamas
+- Undergarments
+- Socks
+- Light jacket or sweater (in case it gets chilly)
+
+Toiletries:
+- Toothbrush and toothpaste
+- Shampoo and conditioner
+- Body wash
+- Sunscreen
+- After-sun lotion
+- Face wash
+- Moisturizer
+- Razor
+- Deodorant
+- Hairbrush or comb
+- Hair ties or accessories
+- Makeup (if you wear it)
+- Personal hygiene products
+
+Miscellaneous:
+- Phone and charger
+- Camera
+- Travel documents (ID, tickets, reservation confirmations)
+- Cash and/or credit cards
+- Snacks
+- Reusable water bottle
+- Travel-sized laundry detergent (if needed)
+- Beach towel
+- Book or e-reader
+- Any medications you may need
+
+Optional items:
+- Beach bag
+- Portable charger
+- Travel guide or map
+- Snorkel gear or other beach toys
+- Flip flops
+- Insulated water bottle
+
+Remember to pack light and only bring what you know you will need. Enjoy your trip to Florida!</code></pre>
+</div>
+</div>
+<section id="discussion" class="level1">
+<h1>Discussion</h1>
+<p>Ironically enough, gpt-4o emphasizes packing light with this plethoric list. And I thought I was an over-packer!!</p>
+<p>It seems that gpt-4o is using a catch-all approach to identify every possible need I could have during this trip, and then adding in some extras for fun. Because I mentioned I’m going to Florida, these extras are very beach-oriented. What gpt-4o doesn’t know is that my time here will be mostly spent inside at my Grandma’s retirement development. I guess some snorkel gear could be (not) fun for the clubhouse pool, though.</p>
+<p>Going back to the essentials, gpt-4o appears to theorize that I should be more over-prepared than I usually am, ensuring I should pack cash, snacks, and laundry detergent, all of which I would normally just obtain on the spot. In my experience, this advice seems more tuned to international travel or travel many years ago when these items were not as easily obtainable on the spot. I guess it doesn’t know exactly where I am originating my travel from, however, its assumption seems a bit far-fetched.</p>
+<p>Just for fun, I am curious to see where it thinks I have traveled from to be here. In my hometown (New York) its the classic pipeline to have grandparents that are from New York and then retire in Florida, so I think this prediction could be an easy one…</p>
+<div id="9199ab95-c6b1-465a-ac49-10cdbfa5ec77" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> OpenAI()</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>completion <span class="op">=</span> client.chat.completions.create(</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  model<span class="op">=</span><span class="st">"gpt-3.5-turbo"</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  messages<span class="op">=</span>[</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"system"</span>, </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>     <span class="st">"content"</span>: <span class="st">"You are a helpful assistant."</span>},</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"user"</span>, </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>     <span class="st">"content"</span>: <span class="st">"I'm going on a 3 day trip to Florida to visit my grandma. Where do you think I could be travelling from?"</span>}</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> completion.choices[<span class="dv">0</span>].message.content</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="ceaa8cb5-08cc-4214-b8ea-239990b9d63f" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Based on the information provided, it's difficult to determine your exact location. However, common places people travel from to visit Florida include states like New York, New Jersey, California, Texas, or even other countries if you're traveling internationally. The distance and mode of transportation can vary based on your starting point.</code></pre>
+</div>
+</div>
+<p>Honestly, pretty spot-on.</p>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>It seems that gpt’s planning expertise is a bit mis-placed although nothing harmful. If I packed everything that was on this list, I would for sure need an extra bag, but maybe I would become the perfect traveler if I did.</p>
+<p>For the future, I could definitely see me using this as an aid to remember something I could forget, but I would not rely on it as a packing assistant for every trip.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
