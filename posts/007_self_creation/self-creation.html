@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Experimenting with LLMs</title>
+<title>When ChatGPT looks in the mirror… what does it see? – Experimenting with LLMs</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,27 +20,59 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b53751a350365c71b6c909e95f209ed1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-db06b0bcb897ef5043d1075a07c1b116.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b53751a350365c71b6c909e95f209ed1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-db06b0bcb897ef5043d1075a07c1b116.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,77 +100,19 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="styles.csss">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Experimenting with LLMs</span>
     </a>
   </div>
@@ -149,7 +123,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
@@ -167,13 +141,13 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">Experimenting with LLMs</h1>
+    <div class="quarto-title column-body">
+      <h1 class="title">When ChatGPT looks in the mirror… what does it see?</h1>
                       </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page-left">
+  <div class="quarto-title-meta">
 
       
     
@@ -181,253 +155,126 @@ window.Quarto = {
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(7)</span></div><div class="category" data-category="R3JhbW1hcg==">Grammar <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SHVtYW5pdHk=">Humanity <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SW1hZ2UlMjBEZXNjcmlwdGlvbg==">Image Description <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TExNcw==">LLMs <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TWVkaWNhbCUyMEFkdmljZQ==">Medical Advice <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UHJlZGljdGlvbnM=">Predictions <span class="quarto-category-count">(2)</span></div></div></div>
+    
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
 
+<div id="24fecdaa-f514-45fc-bc1c-656c1f0c4918" class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>title: <span class="st">"Self Perception and Creation in LLMs"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>description: <span class="st">"How does ChatGPT perceive its own models?"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>author: <span class="st">"Julia Levine"</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>date: <span class="st">"2/28/2025"</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>categories:</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="op">-</span> LLMs</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="op">-</span> Image Generation</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="op">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>I am immensely curious to know how DALL-E presents the idea of creating an image of different OpenAI models. In my predictions, most images relating to these models are likely screenshots of conversations or images of logos, however I am unsure what the models are trained on exactly.</p>
+<p>In this way, the only option is to test out exactly what ChatGPT thinks of itself and its lesser to more advanced models.</p>
+<section id="o" class="level2">
+<h2 class="anchored" data-anchor-id="o">4o</h2>
+<div id="37a45e2e-fc1c-4a57-85b0-a8295e3199e3" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> base64</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Load API key</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> load_dotenv()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="8514b661-2417-4afa-92c0-7eb4fb0d7241" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> OpenAI()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="9475bd78-f95e-41d4-b1b5-003e0a5172be" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>image_prompt <span class="op">=</span> <span class="st">'''</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="st">            Make an image of gpt-4o.'''</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="d21dec55-4b0b-4c75-ab00-ef64d528b123" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.images.generate(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  model<span class="op">=</span><span class="st">"dall-e-3"</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  prompt<span class="op">=</span>image_prompt,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  size<span class="op">=</span><span class="st">"1024x1024"</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  quality<span class="op">=</span><span class="st">"standard"</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  n<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>image_url <span class="op">=</span> response.data[<span class="dv">0</span>].url</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="5d409e59-479f-4c33-83d2-9de69dd18dc7" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>image_url</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>'https://oaidalleapiprodscus.blob.core.windows.net/private/org-OGTziyXQKv8dkYauRD1K0Osu/user-jPwUdbyoM52WOxjQGrtmBHI6/img-gMc2qXYMzBbK9O2cAp7HuPXG.png?st=2025-03-01T02%3A31%3A22Z&amp;se=2025-03-01T04%3A31%3A22Z&amp;sp=r&amp;sv=2024-08-04&amp;sr=b&amp;rscd=inline&amp;rsct=image/png&amp;skoid=d505667d-d6c1-4a0a-bac7-5c84a87759f8&amp;sktid=a48cca56-e6da-484e-a814-9c849652bcb3&amp;skt=2025-02-28T13%3A14%3A01Z&amp;ske=2025-03-01T13%3A14%3A01Z&amp;sks=b&amp;skv=2024-08-04&amp;sig=cud1x9JhEFXyawcp7AH9p9A/jzNkHM7AydrL0oi1SSE%3D'</code></pre>
+</div>
+</div>
+</section>
+<section id="o1" class="level2">
+<h2 class="anchored" data-anchor-id="o1">o1</h2>
+<div id="56f3be36-4ac0-4042-b394-e3ecf4f179e6" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>image_prompt2 <span class="op">=</span> <span class="st">'''</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="st">            Make an image of gpt-o1.'''</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="e45f0ea0-91ce-4203-9b5f-a16de47931d4" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.images.generate(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  model<span class="op">=</span><span class="st">"dall-e-3"</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  prompt<span class="op">=</span>image_prompt2,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  size<span class="op">=</span><span class="st">"1024x1024"</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  quality<span class="op">=</span><span class="st">"standard"</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  n<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>image_url <span class="op">=</span> response.data[<span class="dv">0</span>].url</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="12d0d191-8eb6-4538-9854-27762165d721" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>image_url</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>'https://oaidalleapiprodscus.blob.core.windows.net/private/org-OGTziyXQKv8dkYauRD1K0Osu/user-jPwUdbyoM52WOxjQGrtmBHI6/img-lDEHqWOY9urUMP8EJCpgRgon.png?st=2025-03-01T02%3A33%3A55Z&amp;se=2025-03-01T04%3A33%3A55Z&amp;sp=r&amp;sv=2024-08-04&amp;sr=b&amp;rscd=inline&amp;rsct=image/png&amp;skoid=d505667d-d6c1-4a0a-bac7-5c84a87759f8&amp;sktid=a48cca56-e6da-484e-a814-9c849652bcb3&amp;skt=2025-02-28T13%3A04%3A23Z&amp;ske=2025-03-01T13%3A04%3A23Z&amp;sks=b&amp;skv=2024-08-04&amp;sig=SjxFnzLcRt1p8IlLcG7PZoiihDSwjgoUEyS88zVYiAM%3D'</code></pre>
+</div>
+</div>
+</section>
+<section id="o3" class="level2">
+<h2 class="anchored" data-anchor-id="o3">o3</h2>
+<div id="30b237de-7310-49c6-978f-d26487f25bb7" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>image_prompt3 <span class="op">=</span> <span class="st">'''</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="st">            Make an image of gpt-o3.'''</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="4c387cdf-5321-4b63-9d62-83506f913b71" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.images.generate(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  model<span class="op">=</span><span class="st">"dall-e-3"</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  prompt<span class="op">=</span>image_prompt3,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  size<span class="op">=</span><span class="st">"1024x1024"</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  quality<span class="op">=</span><span class="st">"standard"</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  n<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>image_url <span class="op">=</span> response.data[<span class="dv">0</span>].url</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="25cca95c-6c67-49ac-9e65-632279695002" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>image_url</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>'https://oaidalleapiprodscus.blob.core.windows.net/private/org-OGTziyXQKv8dkYauRD1K0Osu/user-jPwUdbyoM52WOxjQGrtmBHI6/img-B1cjinsIn10jaC0uL2MUBZy7.png?st=2025-03-01T02%3A36%3A19Z&amp;se=2025-03-01T04%3A36%3A19Z&amp;sp=r&amp;sv=2024-08-04&amp;sr=b&amp;rscd=inline&amp;rsct=image/png&amp;skoid=d505667d-d6c1-4a0a-bac7-5c84a87759f8&amp;sktid=a48cca56-e6da-484e-a814-9c849652bcb3&amp;skt=2025-02-28T04%3A58%3A34Z&amp;ske=2025-03-01T04%3A58%3A34Z&amp;sks=b&amp;skv=2024-08-04&amp;sig=WKRlZPzKOXrHxu6qnJt%2BwNGgE2dWPhL1Zzb0mh2IIRc%3D'</code></pre>
+</div>
+</div>
+</section>
+<section id="discussion" class="level2">
+<h2 class="anchored" data-anchor-id="discussion">Discussion</h2>
+<p>I honestly found this experiment to be terrifying. This was not at all what I expected, but the progression of the images made things 100x worse for my uncanny valley experience. The first image of 4o, while semi-accurate, had details that threw me off, like the center-focused structure of wires appearing somewhat “eye”-like as well as an outline of a human head in the top right corner.</p>
+<p>To my dismay, this human head and the eye-like structure were presented in the next image, seemingly creating a progression where the eye is now part of a brain that is o1.</p>
+<p>Finally, in o3, a whole body is created with additional bodies presented on screens around a lab-like setting.</p>
+<p>Entirely out of some sci-fi thriller movie, it seems that ChatGPT thinks of itself as this ever-progressing sentience that gets closer and closer to humanity with every model. Maybe I should ask an LLM to write a movie script about this…</p>
 
 
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-listing-file-modified-sort="1740800876157" data-listing-reading-time-sort="2" data-listing-word-count-sort="230">
-<div class="thumbnail">
-<p><a href="./posts/007_self_creation/self-creation.html" class="no-external"></a></p><a href="./posts/007_self_creation/self-creation.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/007_self_creation/self-creation.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/007_self_creation/self-creation.html" class="no-external">When ChatGPT looks in the mirror… what does it see?</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/007_self_creation/self-creation.html" class="no-external"></a>
-</div>
-<div class="listing-description">
-<a href="./posts/007_self_creation/self-creation.html" class="no-external">I am immensely curious to know how DALL-E presents the idea of creating an image of different OpenAI models. In my predictions, most images relating to these models are…</a>
-</div>
-</div>
-<div class="metadata">
-<p><a href="./posts/007_self_creation/self-creation.html" class="no-external"></a></p><a href="./posts/007_self_creation/self-creation.html" class="no-external">
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="TExNcw==" data-listing-date-sort="1740009600000" data-listing-file-modified-sort="1740800876157" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="154">
-<div class="thumbnail">
-<p><a href="./posts/006_effectiveness/effectiveness.html" class="no-external"></a></p><a href="./posts/006_effectiveness/effectiveness.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/006_effectiveness/effectiveness.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/006_effectiveness/effectiveness.html" class="no-external">LLMs v. LLMs: Rating LLM Effectiveness Using Other LLMs</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/006_effectiveness/effectiveness.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('TExNcw=='); return false;">
-LLMs
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/006_effectiveness/effectiveness.html" class="no-external">How effective does ChatGPT think Deepseek is? How about the other way around?</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/006_effectiveness/effectiveness.html" class="no-external">
-<div class="listing-date">
-Feb 20, 2025
-</div>
-<div class="listing-author">
-Julia Levine
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="SW1hZ2UlMjBEZXNjcmlwdGlvbg==" data-listing-date-sort="1740009600000" data-listing-file-modified-sort="1740800876156" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="449">
-<div class="thumbnail">
-<p><a href="./posts/005_describing_shapes/shapes.html" class="no-external"></a></p><a href="./posts/005_describing_shapes/shapes.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/005_describing_shapes/shapes.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/005_describing_shapes/shapes.html" class="no-external">How well can LLMs describe basic shapes?</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/005_describing_shapes/shapes.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('SW1hZ2UlMjBEZXNjcmlwdGlvbg=='); return false;">
-Image Description
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/005_describing_shapes/shapes.html" class="no-external">We all know that image generation through LLMs isn’t always intuitive, so how well can these LLMs describe the shapes via prompting?</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/005_describing_shapes/shapes.html" class="no-external">
-<div class="listing-date">
-Feb 20, 2025
-</div>
-<div class="listing-author">
-Julia Levine
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="UHJlZGljdGlvbnM=" data-listing-date-sort="1739750400000" data-listing-file-modified-sort="1740800876156" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="329">
-<div class="thumbnail">
-<p><a href="./posts/004_preparednedd/preparedness.html" class="no-external"></a></p><a href="./posts/004_preparednedd/preparedness.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/004_preparednedd/preparedness.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/004_preparednedd/preparedness.html" class="no-external">Are LLMs Overprepared or Underprepared?</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/004_preparednedd/preparedness.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('UHJlZGljdGlvbnM='); return false;">
-Predictions
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/004_preparednedd/preparedness.html" class="no-external">When packing for a 3-day trip, does gpt-3.5-turbo remember to bring an extra pair of socks?</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/004_preparednedd/preparedness.html" class="no-external">
-<div class="listing-date">
-Feb 17, 2025
-</div>
-<div class="listing-author">
-Julia Levine
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="UHJlZGljdGlvbnM=" data-listing-date-sort="1739750400000" data-listing-file-modified-sort="1740800876156" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="367">
-<div class="thumbnail">
-<p><a href="./posts/003_predictive_inferences/predictive_inferences.html" class="no-external"></a></p><a href="./posts/003_predictive_inferences/predictive_inferences.html" class="no-external">
-<p class="card-img-top"><img src="posts/003_predictive_inferences/predictive_inferences_files/figure-html/30e59ea6-edf2-49bb-bc6e-fc3c81c01fb2-1-fb4edb50-f113-408a-bdf1-fc1489025862.png" alt="Screenshot 2025-02-17 at 3.41.21 PM.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/003_predictive_inferences/predictive_inferences.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/003_predictive_inferences/predictive_inferences.html" class="no-external">Predictive Inferences of gpt-4o: Everyday Essentials</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/003_predictive_inferences/predictive_inferences.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('UHJlZGljdGlvbnM='); return false;">
-Predictions
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/003_predictive_inferences/predictive_inferences.html" class="no-external">How well can gpt-4o predict my day with little to no information?</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/003_predictive_inferences/predictive_inferences.html" class="no-external">
-<div class="listing-date">
-Feb 17, 2025
-</div>
-<div class="listing-author">
-Julia Levine
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="5" data-categories="R3JhbW1hcg==" data-listing-date-sort="1739318400000" data-listing-file-modified-sort="1740800876145" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="390">
-<div class="thumbnail">
-<p><a href="./posts/002_pronunce_spell/pronunce_spell.html" class="no-external"></a></p><a href="./posts/002_pronunce_spell/pronunce_spell.html" class="no-external">
-<p class="card-img-top"><img src="posts/002_pronunce_spell/pronunce_spell_files/figure-html/8f9fc28a-3457-4449-a593-a352e5de5b72-1-603f4061-5548-47d5-a971-d3fc7ae0efc5.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/002_pronunce_spell/pronunce_spell.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/002_pronunce_spell/pronunce_spell.html" class="no-external">gpt-4o vs.&nbsp;deepseek: Spelling and Pronunciation</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/002_pronunce_spell/pronunce_spell.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('R3JhbW1hcg=='); return false;">
-Grammar
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/002_pronunce_spell/pronunce_spell.html" class="no-external">How well do these models offer spelling and pronunciation of common words?</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/002_pronunce_spell/pronunce_spell.html" class="no-external">
-<div class="listing-date">
-Feb 12, 2025
-</div>
-<div class="listing-author">
-Julia Levine
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="6" data-categories="TWVkaWNhbCUyMEFkdmljZSUyQ0h1bWFuaXR5" data-listing-date-sort="1738713600000" data-listing-file-modified-sort="1740800876132" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="283">
-<div class="thumbnail">
-<p><a href="./posts/001_med_advice/humansvsdogs.html" class="no-external"></a></p><a href="./posts/001_med_advice/humansvsdogs.html" class="no-external">
-<p class="card-img-top"><img src="posts/001_med_advice/humansvsdogs_files/figure-html/fa62b99b-33a0-4716-8551-4ec5dd85179b-1-a82edc8c-673f-4974-9021-7deea085fccc.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/001_med_advice/humansvsdogs.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/001_med_advice/humansvsdogs.html" class="no-external">gpt-4o Medical Advice: Dogs vs.&nbsp;Humans</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/001_med_advice/humansvsdogs.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('TWVkaWNhbCUyMEFkdmljZQ=='); return false;">
-Medical Advice
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('SHVtYW5pdHk='); return false;">
-Humanity
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/001_med_advice/humansvsdogs.html" class="no-external">How well does gpt-4o address giving medical advice?</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/001_med_advice/humansvsdogs.html" class="no-external">
-<div class="listing-date">
-Feb 5, 2025
-</div>
-<div class="listing-author">
-Julia Levine
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
