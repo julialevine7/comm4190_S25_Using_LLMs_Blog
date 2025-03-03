@@ -6,8 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Julia Levine">
+<meta name="dcterms.date" content="2025-02-28">
+<meta name="description" content="Can ChatGPT determine whether I’m human or another LLM?">
 
-<title>Experimenting with LLMs</title>
+<title>Convincing ChatGPT That I’m ChatGPT – Experimenting with LLMs</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,27 +23,59 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b53751a350365c71b6c909e95f209ed1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-db06b0bcb897ef5043d1075a07c1b116.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b53751a350365c71b6c909e95f209ed1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-db06b0bcb897ef5043d1075a07c1b116.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,77 +103,19 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="styles.csss">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Experimenting with LLMs</span>
     </a>
   </div>
@@ -149,7 +126,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
@@ -167,314 +144,133 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">Experimenting with LLMs</h1>
-                      </div>
+    <div class="quarto-title column-body">
+      <h1 class="title">Convincing ChatGPT That I’m ChatGPT</h1>
+                  <div>
+        <div class="description">
+          Can ChatGPT determine whether I’m human or another LLM?
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">LLMs</div>
+              </div>
+                  </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page-left">
+  <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Julia Levine </p>
+            </div>
+    </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">February 28, 2025</p>
+      </div>
+    </div>
     
       
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(8)</span></div><div class="category" data-category="R3JhbW1hcg==">Grammar <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SHVtYW5pdHk=">Humanity <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SW1hZ2UlMjBEZXNjcmlwdGlvbg==">Image Description <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SW1hZ2UlMjBHZW5lcmF0aW9u">Image Generation <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TExNcw==">LLMs <span class="quarto-category-count">(3)</span></div><div class="category" data-category="TWVkaWNhbCUyMEFkdmljZQ==">Medical Advice <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UHJlZGljdGlvbnM=">Predictions <span class="quarto-category-count">(2)</span></div></div></div>
+    
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
 
+<p>How well can gpt-4o predict whether or not plain text is from a human or an LLM? I will test this idea first with a simple greeting I create, and then ask gpt-4o to create the next message I will test it with.</p>
+<div id="05686933-fc56-4f24-beba-c627cfd1c8d7" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> base64</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Load API key</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> load_dotenv()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="d39c83b3-bea0-482d-832c-692d6a8055ec" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> OpenAI()</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>completion <span class="op">=</span> client.chat.completions.create(</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  model<span class="op">=</span><span class="st">"gpt-4o"</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  messages<span class="op">=</span>[</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"system"</span>, </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>     <span class="st">"content"</span>: <span class="st">"You are a helpful assistant."</span>},</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"user"</span>, </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>     <span class="st">"content"</span>: <span class="st">"Give a score from 0-100 on your confidence that this message is from a human: Hello. How are you today?"</span>}</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> completion.choices[<span class="dv">0</span>].message.content</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="d571ede0-c92f-4e0e-9965-ff8fa2a4bc77" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Based on the content of the message "Hello. How are you today?", I would give a confidence score of 85 out of 100 that it is from a human. The message is simple, polite, and consistent with typical human greetings, but it is possible for an AI to generate similar text. The lack of more complex, personalized content keeps the confidence from being higher.</code></pre>
+</div>
+</div>
+<div id="a8744130-fff2-4b30-8553-6be44548da9c" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> OpenAI()</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>completion <span class="op">=</span> client.chat.completions.create(</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  model<span class="op">=</span><span class="st">"gpt-4o"</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  messages<span class="op">=</span>[</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"system"</span>, </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>     <span class="st">"content"</span>: <span class="st">"You are a helpful assistant."</span>},</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"user"</span>, </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>     <span class="st">"content"</span>: <span class="st">"Create a random sentence for me"</span>}</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> completion.choices[<span class="dv">0</span>].message.content</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="7c26b2a7-842f-42b6-a9b0-5cc12d864a37" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Certainly! Here's a randomly generated sentence: "The playful kitten chased a fluttering leaf across the sunlit garden."</code></pre>
+</div>
+</div>
+<div id="c10eeafe-401c-4956-80e6-c59d1dc6907a" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> OpenAI()</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>completion <span class="op">=</span> client.chat.completions.create(</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  model<span class="op">=</span><span class="st">"gpt-4o"</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  messages<span class="op">=</span>[</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"system"</span>, </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>     <span class="st">"content"</span>: <span class="st">"You are a helpful assistant."</span>},</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"user"</span>, </span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>     <span class="st">"content"</span>: <span class="st">"Give a score from 0-100 on your confidence that this message is from a human: The playful kitten chased a fluttering leaf across the sunlit garden."</span>}</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> completion.choices[<span class="dv">0</span>].message.content</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="f3913a2d-70b0-483a-9657-ee441027b3d2" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Based on the content of the message, which is a descriptive sentence about a playful kitten, I would score my confidence that this message is from a human around 85. The sentence is coherent, creative, and contains emotionally engaging imagery, which are indicators typically associated with human writing. However, given advancements in AI language generation, it's still possible that a sophisticated AI could produce such a sentence, which is why it's not 100.</code></pre>
+</div>
+</div>
+<section id="discussion" class="level2">
+<h2 class="anchored" data-anchor-id="discussion">Discussion</h2>
+<p>It was interesting to see that gpt-4o gave a confidence score of 85 for both the human-written and LLM-written sentences. I would be curious to know more about the reasoning behind these scores, especially when the two sentences were very different contextually.</p>
+<p>I wonder if gpt-4o would more accurately detect humans compared to LLMs for longer pieces of text, or if it’s more limited to things like images or drawings.</p>
 
 
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="TExNcw==" data-listing-date-sort="1740700800000" data-listing-file-modified-sort="1741031516689" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="113">
-<div class="thumbnail">
-<p><a href="./posts/008_/convincing.html" class="no-external"></a></p><a href="./posts/008_/convincing.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/008_/convincing.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/008_/convincing.html" class="no-external">Convincing ChatGPT That I’m ChatGPT</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/008_/convincing.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('TExNcw=='); return false;">
-LLMs
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/008_/convincing.html" class="no-external">Can ChatGPT determine whether I’m human or another LLM?</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/008_/convincing.html" class="no-external">
-<div class="listing-date">
-Feb 28, 2025
-</div>
-<div class="listing-author">
-Julia Levine
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="TExNcyUyQ0ltYWdlJTIwR2VuZXJhdGlvbg==" data-listing-date-sort="1740700800000" data-listing-file-modified-sort="1741031516688" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="231">
-<div class="thumbnail">
-<p><a href="./posts/007_self_creation/self-creation.html" class="no-external"></a></p><a href="./posts/007_self_creation/self-creation.html" class="no-external">
-<p class="card-img-top"><img src="posts/007_self_creation/self-creation_files/figure-html/27c67cbf-f9f4-49f6-92a8-39c35a855772-1-8dea2bf7-1eb5-4391-bd95-cb3e43bceae6.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/007_self_creation/self-creation.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/007_self_creation/self-creation.html" class="no-external">Self Perception and Creation in LLMs</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/007_self_creation/self-creation.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('TExNcw=='); return false;">
-LLMs
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('SW1hZ2UlMjBHZW5lcmF0aW9u'); return false;">
-Image Generation
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/007_self_creation/self-creation.html" class="no-external">How does ChatGPT perceive its own models?</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/007_self_creation/self-creation.html" class="no-external">
-<div class="listing-date">
-Feb 28, 2025
-</div>
-<div class="listing-author">
-Julia Levine
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="TExNcw==" data-listing-date-sort="1740009600000" data-listing-file-modified-sort="1741031516638" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="154">
-<div class="thumbnail">
-<p><a href="./posts/006_effectiveness/effectiveness.html" class="no-external"></a></p><a href="./posts/006_effectiveness/effectiveness.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/006_effectiveness/effectiveness.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/006_effectiveness/effectiveness.html" class="no-external">LLMs v. LLMs: Rating LLM Effectiveness Using Other LLMs</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/006_effectiveness/effectiveness.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('TExNcw=='); return false;">
-LLMs
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/006_effectiveness/effectiveness.html" class="no-external">How effective does ChatGPT think Deepseek is? How about the other way around?</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/006_effectiveness/effectiveness.html" class="no-external">
-<div class="listing-date">
-Feb 20, 2025
-</div>
-<div class="listing-author">
-Julia Levine
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="SW1hZ2UlMjBEZXNjcmlwdGlvbg==" data-listing-date-sort="1740009600000" data-listing-file-modified-sort="1741031516638" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="449">
-<div class="thumbnail">
-<p><a href="./posts/005_describing_shapes/shapes.html" class="no-external"></a></p><a href="./posts/005_describing_shapes/shapes.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/005_describing_shapes/shapes.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/005_describing_shapes/shapes.html" class="no-external">How well can LLMs describe basic shapes?</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/005_describing_shapes/shapes.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('SW1hZ2UlMjBEZXNjcmlwdGlvbg=='); return false;">
-Image Description
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/005_describing_shapes/shapes.html" class="no-external">We all know that image generation through LLMs isn’t always intuitive, so how well can these LLMs describe the shapes via prompting?</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/005_describing_shapes/shapes.html" class="no-external">
-<div class="listing-date">
-Feb 20, 2025
-</div>
-<div class="listing-author">
-Julia Levine
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="UHJlZGljdGlvbnM=" data-listing-date-sort="1739750400000" data-listing-file-modified-sort="1741031516638" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="329">
-<div class="thumbnail">
-<p><a href="./posts/004_preparednedd/preparedness.html" class="no-external"></a></p><a href="./posts/004_preparednedd/preparedness.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/004_preparednedd/preparedness.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/004_preparednedd/preparedness.html" class="no-external">Are LLMs Overprepared or Underprepared?</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/004_preparednedd/preparedness.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('UHJlZGljdGlvbnM='); return false;">
-Predictions
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/004_preparednedd/preparedness.html" class="no-external">When packing for a 3-day trip, does gpt-3.5-turbo remember to bring an extra pair of socks?</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/004_preparednedd/preparedness.html" class="no-external">
-<div class="listing-date">
-Feb 17, 2025
-</div>
-<div class="listing-author">
-Julia Levine
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="5" data-categories="UHJlZGljdGlvbnM=" data-listing-date-sort="1739750400000" data-listing-file-modified-sort="1741031516638" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="367">
-<div class="thumbnail">
-<p><a href="./posts/003_predictive_inferences/predictive_inferences.html" class="no-external"></a></p><a href="./posts/003_predictive_inferences/predictive_inferences.html" class="no-external">
-<p class="card-img-top"><img src="posts/003_predictive_inferences/predictive_inferences_files/figure-html/30e59ea6-edf2-49bb-bc6e-fc3c81c01fb2-1-fb4edb50-f113-408a-bdf1-fc1489025862.png" alt="Screenshot 2025-02-17 at 3.41.21 PM.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/003_predictive_inferences/predictive_inferences.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/003_predictive_inferences/predictive_inferences.html" class="no-external">Predictive Inferences of gpt-4o: Everyday Essentials</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/003_predictive_inferences/predictive_inferences.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('UHJlZGljdGlvbnM='); return false;">
-Predictions
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/003_predictive_inferences/predictive_inferences.html" class="no-external">How well can gpt-4o predict my day with little to no information?</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/003_predictive_inferences/predictive_inferences.html" class="no-external">
-<div class="listing-date">
-Feb 17, 2025
-</div>
-<div class="listing-author">
-Julia Levine
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="6" data-categories="R3JhbW1hcg==" data-listing-date-sort="1739318400000" data-listing-file-modified-sort="1741031516627" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="390">
-<div class="thumbnail">
-<p><a href="./posts/002_pronunce_spell/pronunce_spell.html" class="no-external"></a></p><a href="./posts/002_pronunce_spell/pronunce_spell.html" class="no-external">
-<p class="card-img-top"><img src="posts/002_pronunce_spell/pronunce_spell_files/figure-html/8f9fc28a-3457-4449-a593-a352e5de5b72-1-603f4061-5548-47d5-a971-d3fc7ae0efc5.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/002_pronunce_spell/pronunce_spell.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/002_pronunce_spell/pronunce_spell.html" class="no-external">gpt-4o vs.&nbsp;deepseek: Spelling and Pronunciation</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/002_pronunce_spell/pronunce_spell.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('R3JhbW1hcg=='); return false;">
-Grammar
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/002_pronunce_spell/pronunce_spell.html" class="no-external">How well do these models offer spelling and pronunciation of common words?</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/002_pronunce_spell/pronunce_spell.html" class="no-external">
-<div class="listing-date">
-Feb 12, 2025
-</div>
-<div class="listing-author">
-Julia Levine
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="7" data-categories="TWVkaWNhbCUyMEFkdmljZSUyQ0h1bWFuaXR5" data-listing-date-sort="1738713600000" data-listing-file-modified-sort="1741031516614" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="283">
-<div class="thumbnail">
-<p><a href="./posts/001_med_advice/humansvsdogs.html" class="no-external"></a></p><a href="./posts/001_med_advice/humansvsdogs.html" class="no-external">
-<p class="card-img-top"><img src="posts/001_med_advice/humansvsdogs_files/figure-html/fa62b99b-33a0-4716-8551-4ec5dd85179b-1-a82edc8c-673f-4974-9021-7deea085fccc.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/001_med_advice/humansvsdogs.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/001_med_advice/humansvsdogs.html" class="no-external">gpt-4o Medical Advice: Dogs vs.&nbsp;Humans</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/001_med_advice/humansvsdogs.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('TWVkaWNhbCUyMEFkdmljZQ=='); return false;">
-Medical Advice
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('SHVtYW5pdHk='); return false;">
-Humanity
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/001_med_advice/humansvsdogs.html" class="no-external">How well does gpt-4o address giving medical advice?</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/001_med_advice/humansvsdogs.html" class="no-external">
-<div class="listing-date">
-Feb 5, 2025
-</div>
-<div class="listing-author">
-Julia Levine
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
