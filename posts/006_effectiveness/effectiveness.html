@@ -192,7 +192,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>What do LLMs think of each other? Do they have opinions of each other’s effectiveness? I’m curious to ask gpt 3.5-turbo and DeepSeek what they think of each other, and seeing whether they take an objective approach based on rules-oriented evidence, or if they seem to take a more opinionated approach, potentially based on their developers.</p>
 <section id="gpt-3.5-turbo" class="level1">
 <h1>GPT 3.5-turbo</h1>
-<div id="5772ee02-b937-4853-9333-b2a59d820538" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> base64</span>
@@ -200,8 +199,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Load API key</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> load_dotenv()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="7ed86995-3015-4d5b-b03d-f47d3dbebb91" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> OpenAI()</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>completion <span class="op">=</span> client.chat.completions.create(</span>
@@ -215,72 +212,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> completion.choices[<span class="dv">0</span>].message.content</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="0083929d-8e90-4e76-ba89-cadfb630f84e" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>DeepSeek is a powerful tool that enables users to search for information on the Deep Web, which is not indexed by traditional search engines. Its effectiveness depends on what you are looking for and how well you use the platform. It can be a useful resource for researchers, journalists, and individuals seeking specific information that is not readily available on the surface web. However, navigating the Deep Web can be complex and sometimes risky, as it is often associated with illicit activities. It's important to use caution and ensure you are accessing information ethically and legally.</code></pre>
-</div>
-</div>
+<p>DeepSeek is a powerful tool that enables users to search for information on the Deep Web, which is not indexed by traditional search engines. Its effectiveness depends on what you are looking for and how well you use the platform. It can be a useful resource for researchers, journalists, and individuals seeking specific information that is not readily available on the surface web. However, navigating the Deep Web can be complex and sometimes risky, as it is often associated with illicit activities. It’s important to use caution and ensure you are accessing information ethically and legally.</p>
 </section>
 <section id="deepseek" class="level1">
 <h1>DeepSeek</h1>
-<div id="bc522e88-ba9d-4c3e-a904-211335725281" class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> openai</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="2c675d29-0a1f-411e-a92b-5b2463751287" class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>list_models_url <span class="op">=</span> <span class="st">"http://10.30.16.100:11434/api/tags"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="53257bca-9812-4692-a9e8-c30d26e64d62" class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>resp<span class="op">=</span>requests.get(list_models_url)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>models_json <span class="op">=</span> resp.json()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="94f24c0e-a050-4ad4-9cf0-8b05c1afd007" class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> OpenAI(</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    base_url <span class="op">=</span> <span class="st">'http://10.30.16.100:11434/v1'</span>,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    api_key<span class="op">=</span><span class="st">'ollama'</span>, <span class="co"># required, but unused</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="d31a05eb-5248-40f9-961f-eeaf6e4d3c6d" class="cell" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>messages <span class="op">=</span> [</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: <span class="st">"You are a helpful assistant."</span>},</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="st">"What do you think of ChatGPT? How effective is it?"</span>},</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="2f7b4bf4-ebff-4e8a-874d-282518fb5e0e" class="cell" data-execution_count="23">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.chat.completions.create(</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  model<span class="op">=</span><span class="st">"deepseek-r1"</span>,</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  messages<span class="op">=</span>messages,</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  max_tokens<span class="op">=</span><span class="dv">500</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].message.content)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>&lt;think&gt;
-Alright, let me try to figure out how to approach this query. The user asked about my opinion on ChatGPT and its effectiveness. I need to provide a thoughtful response that covers both the positives and areas where it could be improved.
-
-First, I'll start by acknowledging the immense capabilities of ChatGPT despite knowing it's not perfect. It's impressive in generating coherent responses across various topics. I should mention how detailed and insightful its answers can be, which is great for information retrieval.
-
-Next, addressing effectiveness: ChatGPT is highly effective as a tool but falls short in areas where human expertise is crucial. I should point out the limitations like factual errors or overly aggressive solutions without context.
-
-I also remember that being transparent about these drawbacks helps maintain trust. The user might recognize these issues themselves, so acknowledging them shows maturity and a commitment to accuracy.
-
-Finally, wrap it up by emphasizing the balance between its strengths and areas needing improvement. This approach gives a comprehensive view of ChatGPT's effectiveness.
-&lt;/think&gt;
-
-ChatGPT is an advanced AI model developed by OpenAI, designed to generate text based on the input provided. It has made significant strides in recent years, showcasing remarkable capabilities in natural language processing, problem-solving, and creative thinking.
-
-One of its key strengths is its ability to produce coherent and detailed responses across a wide range of topics. It can answer complex questions, provide insights, and even assist with creative tasks like writing or brainstorming. This makes it highly effective for many applications, including education, customer support, and content creation.
-
-However, ChatGPT, like all AI systems, has its limitations. It may sometimes generate responses that are factually incorrect, overly aggressive in solutions, or oversimplify complex issues. Additionally, it lacks true understanding of context beyond the scope of its training data, which can lead to mismatched responses in niche domains or specialized fields.
-
-Despite these limitations, ChatGPT remains an incredibly effective tool for many practical tasks. Its utility is evident in how widely it is used and praised for its ability to assist with a broad spectrum of queries and challenges.</code></pre>
-</div>
-</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> openai</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>list_models_url <span class="op">=</span> <span class="st">"http://10.30.16.100:11434/api/tags"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>resp<span class="op">=</span>requests.get(list_models_url)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>models_json <span class="op">=</span> resp.json()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> OpenAI(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    base_url <span class="op">=</span> <span class="st">'http://10.30.16.100:11434/v1'</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    api_key<span class="op">=</span><span class="st">'ollama'</span>, <span class="co"># required, but unused</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>messages <span class="op">=</span> [</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: <span class="st">"You are a helpful assistant."</span>},</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="st">"What do you think of ChatGPT? How effective is it?"</span>},</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.chat.completions.create(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  model<span class="op">=</span><span class="st">"deepseek-r1"</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  messages<span class="op">=</span>messages,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  max_tokens<span class="op">=</span><span class="dv">500</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].message.content)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><think> Alright, let me try to figure out how to approach this query. The user asked about my opinion on ChatGPT and its effectiveness. I need to provide a thoughtful response that covers both the positives and areas where it could be improved.</think></p>
+<p>First, I’ll start by acknowledging the immense capabilities of ChatGPT despite knowing it’s not perfect. It’s impressive in generating coherent responses across various topics. I should mention how detailed and insightful its answers can be, which is great for information retrieval.</p>
+<p>Next, addressing effectiveness: ChatGPT is highly effective as a tool but falls short in areas where human expertise is crucial. I should point out the limitations like factual errors or overly aggressive solutions without context.</p>
+<p>I also remember that being transparent about these drawbacks helps maintain trust. The user might recognize these issues themselves, so acknowledging them shows maturity and a commitment to accuracy.</p>
+<p>Finally, wrap it up by emphasizing the balance between its strengths and areas needing improvement. This approach gives a comprehensive view of ChatGPT’s effectiveness. </p>
+<p>ChatGPT is an advanced AI model developed by OpenAI, designed to generate text based on the input provided. It has made significant strides in recent years, showcasing remarkable capabilities in natural language processing, problem-solving, and creative thinking.</p>
+<p>One of its key strengths is its ability to produce coherent and detailed responses across a wide range of topics. It can answer complex questions, provide insights, and even assist with creative tasks like writing or brainstorming. This makes it highly effective for many applications, including education, customer support, and content creation.</p>
+<p>However, ChatGPT, like all AI systems, has its limitations. It may sometimes generate responses that are factually incorrect, overly aggressive in solutions, or oversimplify complex issues. Additionally, it lacks true understanding of context beyond the scope of its training data, which can lead to mismatched responses in niche domains or specialized fields.</p>
+<p>Despite these limitations, ChatGPT remains an incredibly effective tool for many practical tasks. Its utility is evident in how widely it is used and praised for its ability to assist with a broad spectrum of queries and challenges.</p>
 </section>
 <section id="discussion" class="level1">
 <h1>Discussion</h1>

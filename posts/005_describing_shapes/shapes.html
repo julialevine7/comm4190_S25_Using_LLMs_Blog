@@ -195,7 +195,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="anthropic" class="level2">
 <h2 class="anchored" data-anchor-id="anthropic">Anthropic</h2>
 <p>How well can Anthropic describe shapes with no image prompting?</p>
-<div id="33113001-61d9-4e88-83b2-2954715a3bb6" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> anthropic <span class="im">import</span> Anthropic</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> base64</span>
@@ -204,206 +203,145 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># load api keys</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> load_dotenv()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="c76f972d-2e7c-4485-b6b0-c9f520e6ffdd" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> Anthropic()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="86076f77-49ed-4db7-a28c-2a045ae0fb1b" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> model <span class="kw">in</span> client.models.<span class="bu">list</span>().data:</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(model.<span class="bu">id</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>claude-3-7-sonnet-20250219
-claude-3-5-sonnet-20241022
-claude-3-5-haiku-20241022
-claude-3-5-sonnet-20240620
-claude-3-haiku-20240307
-claude-3-opus-20240229
-claude-3-sonnet-20240229
-claude-2.1
-claude-2.0</code></pre>
-</div>
-</div>
-<div id="f81157e8-4048-4604-b7ef-b9b9644d5dff" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>OPUS <span class="op">=</span> <span class="st">'claude-3-opus-20240229'</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>SONNET <span class="op">=</span> <span class="st">'claude-3-5-sonnet-20241022'</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>HAIKU <span class="op">=</span> <span class="st">'claude-3-5-haiku-20241022'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="1981bd8c-1662-409b-8f4e-718b5f383f07" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>message <span class="op">=</span> client.messages.create(</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span>HAIKU,</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    max_tokens<span class="op">=</span><span class="dv">1000</span>,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    temperature<span class="op">=</span><span class="fl">0.0</span>,</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    system<span class="op">=</span><span class="st">"You are a helpful assistant."</span>,</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    messages<span class="op">=</span>[</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="st">"Can you please describe, in as much detail as possible, what a circle is?"</span>}</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(message.content[<span class="dv">0</span>].text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>A circle is a fundamental geometric shape defined as a set of points in a plane that are all equidistant from a central point, called the center. Here's a detailed description:
-
-Geometric Properties:
-- Perfectly round and symmetrical
-- Two-dimensional shape
-- Has no corners or edges
-- Continuous and smooth curve
-
-Key Components:
-1. Center Point
-- The fixed point from which all points on the circle's circumference are the same distance
-- Located at the middle of the circle
-
-2. Radius
-- A line segment from the center to any point on the circumference
-- All radii in a circle are exactly equal in length
-- Determines the circle's size
-
-3. Circumference
-- The complete outer boundary of the circle
-- Length calculated by the formula: 2πr (where r is the radius)
-- Represents the total distance around the circle
-
-4. Diameter
-- A line segment passing through the center
-- Connects two points on the circumference
-- Always twice the length of the radius
-- Splits the circle exactly in half
-
-Mathematical Characteristics:
-- Perfect symmetry
-- Infinite points of rotation
-- Area calculated by πr²
-- Perimeter calculated by 2πr
-
-Circles are fundamental in mathematics, engineering, design, and many natural phenomena.</code></pre>
-</div>
-</div>
-<div id="26cf76c0-d036-486e-ae68-6f78049d4a39" class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> encode_image(image_path):</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">with</span> <span class="bu">open</span>(image_path, <span class="st">"rb"</span>) <span class="im">as</span> image_file:</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> base64.b64encode(image_file.read()).decode(<span class="st">'utf-8'</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>circle <span class="op">=</span> encode_image(<span class="st">'circle.png'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="257c5c61-5479-4ba6-9c0a-0ea4da4eb5a4" class="cell" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>message <span class="op">=</span> client.messages.create(</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span>HAIKU,</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    max_tokens<span class="op">=</span><span class="dv">1024</span>,</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    messages<span class="op">=</span>[</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        {</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>            <span class="st">"role"</span>: <span class="st">"user"</span>,</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>            <span class="st">"content"</span>: [</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>                {</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"type"</span>: <span class="st">"image"</span>,</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"source"</span>: {</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"type"</span>: <span class="st">"base64"</span>,</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"media_type"</span>: <span class="st">'image/png'</span>,</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"data"</span>: circle,</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>                    },</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>                },</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>                {</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"type"</span>: <span class="st">"text"</span>,</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"text"</span>: <span class="st">"Can you please describe what the image is in as much detail as possible?"</span></span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>                }</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>            ],</span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    ],</span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(message)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Message(id='msg_01DYjQ9m9qw7J2xadWLazebi', content=[TextBlock(citations=None, text='The image shows a simple, perfect circle drawn with a black outline on a white background. The circle is symmetrical, with a uniform line weight and crisp, clean edges. Its diameter appears to be consistent throughout, creating a precise geometric shape. There are no additional details, patterns, or markings within the circle - it is a basic, minimalist representation of a circle.', type='text')], model='claude-3-5-haiku-20241022', role='assistant', stop_reason='end_turn', stop_sequence=None, type='message', usage=Usage(cache_creation_input_tokens=0, cache_read_input_tokens=0, input_tokens=126, output_tokens=80))</code></pre>
-</div>
-</div>
+<p>claude-3-7-sonnet-20250219 claude-3-5-sonnet-20241022 claude-3-5-haiku-20241022 claude-3-5-sonnet-20240620 claude-3-haiku-20240307 claude-3-opus-20240229 claude-3-sonnet-20240229 claude-2.1 claude-2.0</p>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>OPUS <span class="op">=</span> <span class="st">'claude-3-opus-20240229'</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>SONNET <span class="op">=</span> <span class="st">'claude-3-5-sonnet-20241022'</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>HAIKU <span class="op">=</span> <span class="st">'claude-3-5-haiku-20241022'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>message <span class="op">=</span> client.messages.create(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span>HAIKU,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    max_tokens<span class="op">=</span><span class="dv">1000</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    temperature<span class="op">=</span><span class="fl">0.0</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    system<span class="op">=</span><span class="st">"You are a helpful assistant."</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    messages<span class="op">=</span>[</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="st">"Can you please describe, in as much detail as possible, what a circle is?"</span>}</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(message.content[<span class="dv">0</span>].text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A circle is a fundamental geometric shape defined as a set of points in a plane that are all equidistant from a central point, called the center. Here’s a detailed description:</p>
+<p>Geometric Properties: - Perfectly round and symmetrical - Two-dimensional shape - Has no corners or edges - Continuous and smooth curve</p>
+<p>Key Components: 1. Center Point - The fixed point from which all points on the circle’s circumference are the same distance - Located at the middle of the circle</p>
+<ol start="2" type="1">
+<li>Radius</li>
+</ol>
+<ul>
+<li>A line segment from the center to any point on the circumference</li>
+<li>All radii in a circle are exactly equal in length</li>
+<li>Determines the circle’s size</li>
+</ul>
+<ol start="3" type="1">
+<li>Circumference</li>
+</ol>
+<ul>
+<li>The complete outer boundary of the circle</li>
+<li>Length calculated by the formula: 2πr (where r is the radius)</li>
+<li>Represents the total distance around the circle</li>
+</ul>
+<ol start="4" type="1">
+<li>Diameter</li>
+</ol>
+<ul>
+<li>A line segment passing through the center</li>
+<li>Connects two points on the circumference</li>
+<li>Always twice the length of the radius</li>
+<li>Splits the circle exactly in half</li>
+</ul>
+<p>Mathematical Characteristics: - Perfect symmetry - Infinite points of rotation - Area calculated by πr² - Perimeter calculated by 2πr</p>
+<p>Circles are fundamental in mathematics, engineering, design, and many natural phenomena.</p>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> encode_image(image_path):</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">with</span> <span class="bu">open</span>(image_path, <span class="st">"rb"</span>) <span class="im">as</span> image_file:</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> base64.b64encode(image_file.read()).decode(<span class="st">'utf-8'</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>circle <span class="op">=</span> encode_image(<span class="st">'circle.png'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>message <span class="op">=</span> client.messages.create(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span>HAIKU,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    max_tokens<span class="op">=</span><span class="dv">1024</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    messages<span class="op">=</span>[</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>            <span class="st">"role"</span>: <span class="st">"user"</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>            <span class="st">"content"</span>: [</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>                {</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"type"</span>: <span class="st">"image"</span>,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"source"</span>: {</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"type"</span>: <span class="st">"base64"</span>,</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"media_type"</span>: <span class="st">'image/png'</span>,</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"data"</span>: circle,</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>                    },</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>                },</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>                {</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"type"</span>: <span class="st">"text"</span>,</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"text"</span>: <span class="st">"Can you please describe what the image is in as much detail as possible?"</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>                }</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>            ],</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    ],</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(message)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Message(id=‘msg_01DYjQ9m9qw7J2xadWLazebi’, content=[TextBlock(citations=None, text=‘The image shows a simple, perfect circle drawn with a black outline on a white background. The circle is symmetrical, with a uniform line weight and crisp, clean edges. Its diameter appears to be consistent throughout, creating a precise geometric shape. There are no additional details, patterns, or markings within the circle - it is a basic, minimalist representation of a circle.’, type=‘text’)], model=‘claude-3-5-haiku-20241022’, role=‘assistant’, stop_reason=‘end_turn’, stop_sequence=None, type=‘message’, usage=Usage(cache_creation_input_tokens=0, cache_read_input_tokens=0, input_tokens=126, output_tokens=80))</p>
 </section>
 <section id="gemini" class="level2">
 <h2 class="anchored" data-anchor-id="gemini">Gemini</h2>
 <p>How well can Gemini describe shapes compared to Anthropic?</p>
-<div id="3fef057a-3ad3-45c3-a4c7-9ce84ae96d06" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> google.generativeai <span class="im">as</span> genai</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Image, display, Markdown</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> load_dotenv()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="202eae40-de94-46d4-ad94-c0bd423467e7" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>genai.configure()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="38c26f41-60c6-4daf-ada6-4fa93fa413eb" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> genai.GenerativeModel(model_name<span class="op">=</span><span class="st">"models/gemini-1.5-pro-latest"</span>)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> model.generate_content(<span class="st">"Can you please describe, in as much detail as possible, what a circle is?"</span>)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>A circle is a fundamental geometric shape defined as follows:
-
-**Formal Definition:**
-
-A circle is the set of all points in a plane that are equidistant from a given point called the *center*.  The constant distance between the center and any point on the circle is called the *radius*.
-
-**Key Properties and Features:**
-
-* **Center:** The fixed point in the plane from which all points on the circle are equidistant.
-* **Radius (r):**  The distance between the center and any point on the circle.  It's a crucial defining characteristic.  All radii within a given circle are of equal length.
-* **Diameter (d):** A line segment that passes through the center and whose endpoints lie on the circle.  The diameter is twice the length of the radius (d = 2r).
-* **Circumference (C):** The distance around the circle.  It's calculated using the formula C = 2πr or C = πd, where π (pi) is a mathematical constant approximately equal to 3.14159.
-* **Area (A):** The region enclosed by the circle.  It's calculated using the formula A = πr².
-* **Chord:** A line segment whose endpoints lie on the circle. The diameter is the longest chord in a circle.
-* **Secant:** A line that intersects the circle at two distinct points.
-* **Tangent:** A line that intersects the circle at exactly one point, called the point of tangency.  The tangent line is perpendicular to the radius drawn to the point of tangency.
-* **Arc:** A portion of the circumference of a circle.
-* **Sector:** A region bounded by two radii and an arc of the circle.  It's like a "slice of pie."
-* **Segment:** A region bounded by a chord and an arc of the circle.
-* **Concentric Circles:** Circles that share the same center but have different radii.
-* **Unit Circle:** A circle with a radius of 1.  It's frequently used in trigonometry.
-
-**Equation of a Circle:**
-
-In a Cartesian coordinate system, the equation of a circle with center (h, k) and radius r is given by:
-
-(x - h)² + (y - k)² = r²
-
-If the center is at the origin (0,0), the equation simplifies to:
-
-x² + y² = r²
-
-
-**Relationships and Applications:**
-
-Circles appear throughout mathematics and the real world.  They are integral to:
-
-* **Geometry:**  Used in countless geometric constructions and theorems.
-* **Trigonometry:** The unit circle defines trigonometric functions.
-* **Calculus:**  Used in calculating areas, volumes, and other properties of curved shapes.
-* **Physics:**  Represent orbits, waves, and other natural phenomena.
-* **Engineering:**  Used in designing wheels, gears, and other circular structures.
-* **Art and Design:**  Used for aesthetic purposes and creating visually appealing patterns.
-
-
-This detailed description should provide a comprehensive understanding of what a circle is and its various properties and applications.
-</code></pre>
-</div>
-</div>
-<div id="48a67302-0192-4734-8048-df9ba80c6b15" class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>sample_file <span class="op">=</span> genai.upload_file(path<span class="op">=</span><span class="st">"circle.png"</span>,</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>                                display_name<span class="op">=</span><span class="st">"circle"</span>)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Uploaded file '</span><span class="sc">{</span>sample_file<span class="sc">.</span>display_name<span class="sc">}</span><span class="ss">' as: </span><span class="sc">{</span>sample_file<span class="sc">.</span>uri<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Uploaded file 'circle' as: https://generativelanguage.googleapis.com/v1beta/files/fmd3frbfwft5</code></pre>
-</div>
-</div>
-<div id="0d788df7-28f5-40d2-81ea-c7df155cc282" class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> genai.GenerativeModel(model_name<span class="op">=</span><span class="st">"models/gemini-1.5-pro-latest"</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> model.generate_content([<span class="st">"Can you please describe what the image is in as much detail as possible?"</span>, sample_file])</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>The image is a simple, unfilled black circle on a white background. The circle's line is of uniform thickness and appears to be perfectly smooth, with no breaks or variations in its width.  There are no other elements or markings within or outside the circle.  The background is a solid, untextured white.</code></pre>
-</div>
-</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> google.generativeai <span class="im">as</span> genai</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Image, display, Markdown</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> load_dotenv()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>genai.configure()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> genai.GenerativeModel(model_name<span class="op">=</span><span class="st">"models/gemini-1.5-pro-latest"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> model.generate_content(<span class="st">"Can you please describe, in as much detail as possible, what a circle is?"</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A circle is a fundamental geometric shape defined as follows:</p>
+<p><strong>Formal Definition:</strong></p>
+<p>A circle is the set of all points in a plane that are equidistant from a given point called the <em>center</em>. The constant distance between the center and any point on the circle is called the <em>radius</em>.</p>
+<p><strong>Key Properties and Features:</strong></p>
+<ul>
+<li><strong>Center:</strong> The fixed point in the plane from which all points on the circle are equidistant.</li>
+<li><strong>Radius (r):</strong> The distance between the center and any point on the circle. It’s a crucial defining characteristic. All radii within a given circle are of equal length.</li>
+<li><strong>Diameter (d):</strong> A line segment that passes through the center and whose endpoints lie on the circle. The diameter is twice the length of the radius (d = 2r).</li>
+<li><strong>Circumference (C):</strong> The distance around the circle. It’s calculated using the formula C = 2πr or C = πd, where π (pi) is a mathematical constant approximately equal to 3.14159.</li>
+<li><strong>Area (A):</strong> The region enclosed by the circle. It’s calculated using the formula A = πr².</li>
+<li><strong>Chord:</strong> A line segment whose endpoints lie on the circle. The diameter is the longest chord in a circle.</li>
+<li><strong>Secant:</strong> A line that intersects the circle at two distinct points.</li>
+<li><strong>Tangent:</strong> A line that intersects the circle at exactly one point, called the point of tangency. The tangent line is perpendicular to the radius drawn to the point of tangency.</li>
+<li><strong>Arc:</strong> A portion of the circumference of a circle.</li>
+<li><strong>Sector:</strong> A region bounded by two radii and an arc of the circle. It’s like a “slice of pie.”</li>
+<li><strong>Segment:</strong> A region bounded by a chord and an arc of the circle.</li>
+<li><strong>Concentric Circles:</strong> Circles that share the same center but have different radii.</li>
+<li><strong>Unit Circle:</strong> A circle with a radius of 1. It’s frequently used in trigonometry.</li>
+</ul>
+<p><strong>Equation of a Circle:</strong></p>
+<p>In a Cartesian coordinate system, the equation of a circle with center (h, k) and radius r is given by:</p>
+<p>(x - h)² + (y - k)² = r²</p>
+<p>If the center is at the origin (0,0), the equation simplifies to:</p>
+<p>x² + y² = r²</p>
+<p><strong>Relationships and Applications:</strong></p>
+<p>Circles appear throughout mathematics and the real world. They are integral to:</p>
+<ul>
+<li><strong>Geometry:</strong> Used in countless geometric constructions and theorems.</li>
+<li><strong>Trigonometry:</strong> The unit circle defines trigonometric functions.</li>
+<li><strong>Calculus:</strong> Used in calculating areas, volumes, and other properties of curved shapes.</li>
+<li><strong>Physics:</strong> Represent orbits, waves, and other natural phenomena.</li>
+<li><strong>Engineering:</strong> Used in designing wheels, gears, and other circular structures.</li>
+<li><strong>Art and Design:</strong> Used for aesthetic purposes and creating visually appealing patterns.</li>
+</ul>
+<p>This detailed description should provide a comprehensive understanding of what a circle is and its various properties and applications.</p>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sample_file <span class="op">=</span> genai.upload_file(path<span class="op">=</span><span class="st">"circle.png"</span>,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                                display_name<span class="op">=</span><span class="st">"circle"</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Uploaded file '</span><span class="sc">{</span>sample_file<span class="sc">.</span>display_name<span class="sc">}</span><span class="ss">' as: </span><span class="sc">{</span>sample_file<span class="sc">.</span>uri<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Uploaded file ‘circle’ as: https://generativelanguage.googleapis.com/v1beta/files/fmd3frbfwft5</p>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> genai.GenerativeModel(model_name<span class="op">=</span><span class="st">"models/gemini-1.5-pro-latest"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> model.generate_content([<span class="st">"Can you please describe what the image is in as much detail as possible?"</span>, sample_file])</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response.text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The image is a simple, unfilled black circle on a white background. The circle’s line is of uniform thickness and appears to be perfectly smooth, with no breaks or variations in its width. There are no other elements or markings within or outside the circle. The background is a solid, untextured white.</p>
 </section>
 <section id="discussion" class="level2">
 <h2 class="anchored" data-anchor-id="discussion">Discussion</h2>
