@@ -2,8 +2,8 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/012_/Untitled.html",
       "/posts/011_translating/translating.html",
+      "/posts/012_dog_classifier/dog_classifier.html",
       "/posts/010_flash/flash.html",
       "/posts/009_gptuser/gptuser.html",
       "/posts/008_convincing/convincing.html",
