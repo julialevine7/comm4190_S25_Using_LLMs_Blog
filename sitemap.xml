@@ -2,58 +2,62 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://julialevine7.github.io/comm4190_S25_Using_LLMs_Blog/posts/005_describing_shapes/shapes.html</loc>
-    <lastmod>2025-03-24T20:25:22.227Z</lastmod>
+    <lastmod>2025-04-02T16:11:58.763Z</lastmod>
   </url>
   <url>
     <loc>https://julialevine7.github.io/comm4190_S25_Using_LLMs_Blog/posts/006_effectiveness/effectiveness.html</loc>
-    <lastmod>2025-03-24T20:25:22.228Z</lastmod>
-  </url>
-  <url>
-    <loc>https://julialevine7.github.io/comm4190_S25_Using_LLMs_Blog/posts/011_translating/translating.html</loc>
-    <lastmod>2025-03-24T20:25:22.374Z</lastmod>
-  </url>
-  <url>
-    <loc>https://julialevine7.github.io/comm4190_S25_Using_LLMs_Blog/posts/007_self_creation/self-creation.html</loc>
-    <lastmod>2025-03-24T20:25:22.295Z</lastmod>
-  </url>
-  <url>
-    <loc>https://julialevine7.github.io/comm4190_S25_Using_LLMs_Blog/posts/008_convincing/convincing.html</loc>
-    <lastmod>2025-03-24T20:25:22.296Z</lastmod>
-  </url>
-  <url>
-    <loc>https://julialevine7.github.io/comm4190_S25_Using_LLMs_Blog/posts/001_med_advice/humansvsdogs.html</loc>
-    <lastmod>2025-03-24T20:25:22.188Z</lastmod>
-  </url>
-  <url>
-    <loc>https://julialevine7.github.io/comm4190_S25_Using_LLMs_Blog/about.html</loc>
-    <lastmod>2025-03-24T20:25:22.176Z</lastmod>
-  </url>
-  <url>
-    <loc>https://julialevine7.github.io/comm4190_S25_Using_LLMs_Blog/index.html</loc>
-    <lastmod>2025-03-24T20:25:22.177Z</lastmod>
-  </url>
-  <url>
-    <loc>https://julialevine7.github.io/comm4190_S25_Using_LLMs_Blog/posts/010_flash/flash.html</loc>
-    <lastmod>2025-03-24T20:25:22.351Z</lastmod>
-  </url>
-  <url>
-    <loc>https://julialevine7.github.io/comm4190_S25_Using_LLMs_Blog/posts/002_pronunce_spell/pronunce_spell.html</loc>
-    <lastmod>2025-03-24T20:25:22.207Z</lastmod>
-  </url>
-  <url>
-    <loc>https://julialevine7.github.io/comm4190_S25_Using_LLMs_Blog/posts/009_gptuser/gptuser.html</loc>
-    <lastmod>2025-03-24T20:25:22.330Z</lastmod>
-  </url>
-  <url>
-    <loc>https://julialevine7.github.io/comm4190_S25_Using_LLMs_Blog/posts/004_preparednedd/preparedness.html</loc>
-    <lastmod>2025-03-24T20:25:22.227Z</lastmod>
+    <lastmod>2025-04-02T16:11:58.763Z</lastmod>
   </url>
   <url>
     <loc>https://julialevine7.github.io/comm4190_S25_Using_LLMs_Blog/posts/003_predictive_inferences/predictive_inferences.html</loc>
-    <lastmod>2025-03-24T20:25:22.227Z</lastmod>
+    <lastmod>2025-04-02T16:11:58.763Z</lastmod>
+  </url>
+  <url>
+    <loc>https://julialevine7.github.io/comm4190_S25_Using_LLMs_Blog/posts/004_preparednedd/preparedness.html</loc>
+    <lastmod>2025-04-02T16:11:58.763Z</lastmod>
+  </url>
+  <url>
+    <loc>https://julialevine7.github.io/comm4190_S25_Using_LLMs_Blog/posts/009_gptuser/gptuser.html</loc>
+    <lastmod>2025-04-02T16:11:58.839Z</lastmod>
+  </url>
+  <url>
+    <loc>https://julialevine7.github.io/comm4190_S25_Using_LLMs_Blog/posts/002_pronunce_spell/pronunce_spell.html</loc>
+    <lastmod>2025-04-02T16:11:58.752Z</lastmod>
+  </url>
+  <url>
+    <loc>https://julialevine7.github.io/comm4190_S25_Using_LLMs_Blog/posts/010_flash/flash.html</loc>
+    <lastmod>2025-04-02T16:11:58.857Z</lastmod>
+  </url>
+  <url>
+    <loc>https://julialevine7.github.io/comm4190_S25_Using_LLMs_Blog/index.html</loc>
+    <lastmod>2025-04-02T16:11:58.729Z</lastmod>
+  </url>
+  <url>
+    <loc>https://julialevine7.github.io/comm4190_S25_Using_LLMs_Blog/about.html</loc>
+    <lastmod>2025-04-02T16:11:58.728Z</lastmod>
+  </url>
+  <url>
+    <loc>https://julialevine7.github.io/comm4190_S25_Using_LLMs_Blog/posts/001_med_advice/humansvsdogs.html</loc>
+    <lastmod>2025-04-02T16:11:58.739Z</lastmod>
+  </url>
+  <url>
+    <loc>https://julialevine7.github.io/comm4190_S25_Using_LLMs_Blog/posts/008_convincing/convincing.html</loc>
+    <lastmod>2025-04-02T16:11:58.814Z</lastmod>
+  </url>
+  <url>
+    <loc>https://julialevine7.github.io/comm4190_S25_Using_LLMs_Blog/posts/007_self_creation/self-creation.html</loc>
+    <lastmod>2025-04-02T16:11:58.813Z</lastmod>
+  </url>
+  <url>
+    <loc>https://julialevine7.github.io/comm4190_S25_Using_LLMs_Blog/posts/011_translating/translating.html</loc>
+    <lastmod>2025-04-02T16:11:58.878Z</lastmod>
+  </url>
+  <url>
+    <loc>https://julialevine7.github.io/comm4190_S25_Using_LLMs_Blog/posts/014_4o_tasks/tasks.html</loc>
+    <lastmod>2025-04-02T16:11:58.899Z</lastmod>
   </url>
   <url>
     <loc>https://julialevine7.github.io/comm4190_S25_Using_LLMs_Blog/posts/012_dog_classifier/dog_classifier.html</loc>
-    <lastmod>2025-03-24T20:25:22.388Z</lastmod>
+    <lastmod>2025-04-02T16:11:58.890Z</lastmod>
   </url>
 </urlset>

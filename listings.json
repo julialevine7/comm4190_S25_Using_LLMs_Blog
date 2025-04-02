@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/014_4o_tasks/tasks.html",
       "/posts/011_translating/translating.html",
       "/posts/012_dog_classifier/dog_classifier.html",
       "/posts/010_flash/flash.html",
