@@ -6,8 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Julia Levine">
+<meta name="dcterms.date" content="2025-04-02">
+<meta name="description" content="How well can gpt-4o schedule tasks?">
 
-<title>gpt-4o Tasks Beta – Experimenting with LLMs</title>
+<title>Testing the new gpt-4o tasks beta – Experimenting with LLMs</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,40 +22,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -142,14 +111,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">gpt-4o Tasks Beta</h1>
-                      </div>
+      <h1 class="title">Testing the new gpt-4o tasks beta</h1>
+                  <div>
+        <div class="description">
+          How well can gpt-4o schedule tasks?
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">LLMs</div>
+              </div>
+                  </div>
   </div>
     
   
   <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Julia Levine </p>
+            </div>
+    </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">April 2, 2025</p>
+      </div>
+    </div>
     
       
     </div>
@@ -166,24 +155,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<div id="01b3c4f4-6f36-4352-9c79-286a794dc487" class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>execute:</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  output: asis</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>title: <span class="st">"Testing the new gpt-4o tasks beta"</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>description: <span class="st">"How well can gpt-4o schedule tasks?"</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>author: <span class="st">"Julia Levine"</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>date: <span class="st">"4/2/2025"</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>categories:</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="op">-</span> LLMs</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="op">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<section id="gpt-4o-tasks-beta" class="level2">
+<h2 class="anchored" data-anchor-id="gpt-4o-tasks-beta">gpt-4o Tasks Beta</h2>
 <p>OpenAI has recently come out with a new model that is supposed to be able to schedule tasks, such as reminding you of important events, following up on a question, or running a code debugger. This new and versatile tool seems to have promising potential! However, being the LLM experimenter I am, I am interested to see its limits.</p>
 <p>My plan is to test its timing, computation, and generation capabilities. First, I will ask it to complete a task in one second, to which I expect some sort of bypass to the task generation system where gpt-4o will just provide the answer immediately. Then, I will increase the time limit to one minute and ask it to generate an image and conduct a simple calculation.</p>
 <p><img src="tasks_files/figure-html/4e6c0e2d-ac68-4748-b81c-2a8866091d38-2-1e218bb6-ee56-4b44-aa96-f7edc98802db.png" class="img-fluid" alt="Screenshot 2025-04-02 at 12.08.18 PM.png"> <img src="tasks_files/figure-html/4e6c0e2d-ac68-4748-b81c-2a8866091d38-1-1a2f4005-2b71-45f2-9eea-efcb042a16ce.png" class="img-fluid" alt="Screenshot 2025-04-02 at 12.08.45 PM.png"> <img src="tasks_files/figure-html/4e6c0e2d-ac68-4748-b81c-2a8866091d38-3-5eed5c58-913a-410c-a350-f8e5a10cdb54.png" class="img-fluid" alt="Screenshot 2025-04-02 at 12.09.06 PM.png"> <img src="tasks_files/figure-html/4e6c0e2d-ac68-4748-b81c-2a8866091d38-4-f054b1fb-07c6-428c-ae62-48bd450961bb.png" class="img-fluid" alt="Screenshot 2025-04-02 at 12.09.25 PM.png"> <img src="tasks_files/figure-html/4e6c0e2d-ac68-4748-b81c-2a8866091d38-5-f93b5261-0342-459e-bda1-10971a2c2f17.png" class="img-fluid" alt="Screenshot 2025-04-02 at 12.09.37 PM.png"></p>
+</section>
 <section id="discussion" class="level2">
 <h2 class="anchored" data-anchor-id="discussion">Discussion</h2>
 <p>Very surprisingly, I could not get the task functionality to work at all. Because I assumed there could be an issue in the formatting of the tasks I was asking it to do, I asked it to generate its own task or a random task, to which it also broke. I am still interested in learning how to execute these tasks correctly. I will conduct more research separately to see if other users have been more successful than I in scheduling these tasks with Open AI’s new model.</p>
