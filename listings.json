@@ -2,17 +2,19 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/016_idealness/idealness.html",
+      "/posts/015_games/battleship.html",
       "/posts/014_4o_tasks/tasks.html",
-      "/posts/011_translating/translating.html",
       "/posts/012_dog_classifier/dog_classifier.html",
+      "/posts/011_translating/translating.html",
       "/posts/010_flash/flash.html",
       "/posts/009_gptuser/gptuser.html",
       "/posts/008_convincing/convincing.html",
       "/posts/007_self_creation/self-creation.html",
-      "/posts/006_effectiveness/effectiveness.html",
       "/posts/005_describing_shapes/shapes.html",
-      "/posts/004_preparednedd/preparedness.html",
+      "/posts/006_effectiveness/effectiveness.html",
       "/posts/003_predictive_inferences/predictive_inferences.html",
+      "/posts/004_preparednedd/preparedness.html",
       "/posts/002_pronunce_spell/pronunce_spell.html",
       "/posts/001_med_advice/humansvsdogs.html"
     ]

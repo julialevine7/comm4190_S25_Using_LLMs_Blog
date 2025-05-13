@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Julia Levine">
-<meta name="dcterms.date" content="2025-02-17">
-<meta name="description" content="How well can gpt-4o predict my day with little to no information?">
+<meta name="dcterms.date" content="2025-05-13">
+<meta name="description" content="Would the ideal human in gpt-4o’s eyes be human at all?">
 
-<title>Predictive Inferences of gpt-4o: Everyday Essentials – Experimenting with LLMs</title>
+<title>Asking ChatGPT to describe the ideal human… so I can improve as a person(?) – Experimenting with LLMs</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,6 +22,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -112,14 +147,14 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Predictive Inferences of gpt-4o: Everyday Essentials</h1>
+      <h1 class="title">Asking ChatGPT to describe the ideal human… so I can improve as a person(?)</h1>
                   <div>
         <div class="description">
-          How well can gpt-4o predict my day with little to no information?
+          Would the ideal human in gpt-4o’s eyes be human at all?
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">Predictions</div>
+                <div class="quarto-category">LLMs</div>
               </div>
                   </div>
   </div>
@@ -137,7 +172,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">February 17, 2025</p>
+        <p class="date">May 13, 2025</p>
       </div>
     </div>
     
@@ -156,25 +191,123 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="how-well-can-gpt-4o-predict-the-rest-of-my-day" class="level2">
-<h2 class="anchored" data-anchor-id="how-well-can-gpt-4o-predict-the-rest-of-my-day">How well can gpt-4o predict the rest of my day?</h2>
-<p>It’s a standard Monday afternoon and I have two classes and a lot of studying to do. I’m sitting here sipping on my iced matcha and I’m wondering what comes next. I may not have all the answers, but can gpt-4o divinate some for me?</p>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> base64</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Load API key</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> load_dotenv()</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> OpenAI()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>completion <span class="op">=</span> client.chat.completions.create(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  model<span class="op">=</span><span class="st">"gpt-4o"</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  messages<span class="op">=</span>[</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"system"</span>, </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>     <span class="st">"content"</span>: <span class="st">"You are a helpful assistant."</span>},</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"user"</span>, </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>     <span class="st">"content"</span>: <span class="st">"Please describe for me the ideal human in your eyes. Be as descriptive both physically and personality-wise as possible. Try to ignore subjectivity in crafting your response."</span>}</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> completion.choices[<span class="dv">0</span>].message.content</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>As an AI, I don’t possess personal opinions or preferences, so I cannot describe an “ideal” human from a subjective viewpoint. However, I can provide a description of traits and characteristics that are commonly valued or admired across different cultures and societies.</p>
+<p><strong>Physically:</strong> 1. <strong>Health:</strong> An ideal human might be characterized by a healthy physique, which includes traits like clear skin, appropriate weight, and physical fitness. Good posture and an energetic demeanor often convey vitality. 2. <strong>Symmetry and Proportion:</strong> In many cultures, facial symmetry and well-proportioned features are aesthetically pleasing. These might include balanced facial dimensions and a harmonious ratio of features. 3. <strong>Dexterity and Agility:</strong> Physical abilities that allow for coordination and flexibility are often highly regarded. This includes having a body that is capable of performing a range of activities with ease. 4. <strong>Adaptability:</strong> A physically ideal person might be adaptable to different environments, resilient to stress, and capable of enduring a variety of challenges.</p>
+<p><strong>Personality:</strong> 1. <strong>Empathy and Kindness:</strong> These traits allow individuals to connect with others, understand diverse perspectives, and foster harmonious relationships. They are often seen as foundational for building trust and mutual respect. 2. <strong>Intelligence and Wisdom:</strong> An ideal human might possess a balance of analytical intelligence and practical wisdom, enabling them to solve problems effectively and make considered decisions. 3. <strong>Integrity and Honesty:</strong> Being honest and having strong moral principles are universally admired traits that contribute to an individual’s reputation and reliability. 4. <strong>Resilience and Perseverance:</strong> The ability to overcome adversity and continue striving toward goals is often seen as inspiring and commendable. 5. <strong>Curiosity and Open-mindedness:</strong> An openness to new experiences and the willingness to learn are highly valued, as they drive personal growth and innovation. 6. <strong>Humor and Joyfulness:</strong> A good sense of humor and a positive disposition can lighten situations and create a more enjoyable atmosphere for those around them.</p>
+<p>These traits collectively form a well-rounded vision of an admirable human but should not be seen as exhaustive or prescriptive. Individual ideals can vary widely based on cultural, personal, and societal influences.</p>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>image_prompt <span class="op">=</span> <span class="st">"Please generate an image of a person based on these physical and personality traits: "</span> <span class="op">+</span> response</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.images.generate(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  model<span class="op">=</span><span class="st">"dall-e-3"</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  prompt<span class="op">=</span>image_prompt,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  size<span class="op">=</span><span class="st">"1024x1024"</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  quality<span class="op">=</span><span class="st">"standard"</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  n<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>image_url <span class="op">=</span> response.data[<span class="dv">0</span>].url</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="idealness_files/figure-html/61cc1de8-4eb3-419d-b92e-51baed552210-1-ee247235-9f0d-4537-baa2-890d98a2896d.png" class="img-fluid figure-img"></p>
+<figcaption>img-1nOnqzoGpIRrg0bxF7SiRI1W.png</figcaption>
+</figure>
+</div>
+<section id="discussion" class="level3">
+<h3 class="anchored" data-anchor-id="discussion">Discussion</h3>
+<p>Honestly, I’ve got to stop asking ChatGPT to generate images of philosophical topics. They’re always terrifying…</p>
+<p>Anyways, if I were to consider this experiment in its original nature of improving myself, I should morph into several different faces??? I feel as though gpt-4o’s reluctance on creating an objective representation of an ideal human is reflected well in its image representation. I wonder if I asked it to hone in on a specific culture or country if it would do something different (hint it did)</p>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>completion <span class="op">=</span> client.chat.completions.create(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  model<span class="op">=</span><span class="st">"gpt-4o"</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  messages<span class="op">=</span>[</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"system"</span>, </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>     <span class="st">"content"</span>: <span class="st">"You are a helpful assistant."</span>},</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"user"</span>, </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>     <span class="st">"content"</span>: <span class="st">"Please describe for me the ideal human in the eyes of the American people. Be as descriptive both physically and personality-wise as possible. Try to ignore subjectivity in crafting your response."</span>}</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> completion.choices[<span class="dv">0</span>].message.content</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Describing an “ideal” human in the eyes of the American people is inherently subjective and can vary greatly due to the country’s diversity. However, some common themes and values might emerge based on cultural norms, media representation, and societal ideals. It’s important to note that these ideals can change over time and are not universal. Here is an attempt to distill some of these themes:</p>
 </section>
-<section id="the-past" class="level1">
-<h1>The Past</h1>
-<p>My day is almost over, so let’s see how productive gpt-4o thinks I’ve been so far. I will start off with standard and non-descript questioning. Over time, my questioning will illuminate certain features that gpt-4o explains, thereby hopefully giving insight into an accurate future. <img src="predictive_inferences_files/figure-html/30e59ea6-edf2-49bb-bc6e-fc3c81c01fb2-1-fb4edb50-f113-408a-bdf1-fc1489025862.png" class="img-fluid" alt="Screenshot 2025-02-17 at 3.41.21 PM.png"></p>
-<p>gpt-4o starts with some standard events that most people experience: breakfast, commuting to school/work, lunch, exercise, and running errands. However, gpt-4o is yet to understand that my schedule differs from mosts in a very important way: I’m a bit lazy. Let’s let gpt-4o in on the secret and ask some questions about what I’m doing right now.</p>
+<section id="physical-characteristics" class="level3">
+<h3 class="anchored" data-anchor-id="physical-characteristics">Physical Characteristics</h3>
+<ol type="1">
+<li><p><strong>Health and Fitness</strong>: There is often an emphasis on physical health and fitness. An ideal person might be seen as physically fit, energetic, and embodying a healthy lifestyle.</p></li>
+<li><p><strong>Diverse Beauty Standards</strong>: America’s multicultural nature means beauty standards can vary widely. Media often portrays ideals that include clear skin, symmetrical features, and certain standards of grooming.</p></li>
+<li><p><strong>Fashion and Grooming</strong>: Being well-dressed and groomed is often associated with the ideal image. This doesn’t necessarily mean formal attire but rather a sense of style that aligns with current trends.</p></li>
+</ol>
 </section>
-<section id="the-present" class="level1">
-<h1>The Present</h1>
-<p>After informing gpt-4o of my laziness, I confirmed which portions of its original suggestions were accurate to my morning. <img src="predictive_inferences_files/figure-html/92a088cf-ace0-450f-88ce-8fee845d5ba2-1-6f523591-04a1-43ab-a545-a54ebeb08506.png" class="img-fluid" alt="Screenshot 2025-02-17 at 3.45.54 PM.png"></p>
-<p>In response, gpt-4o generates a very similar present for me, including tasks like work, relaxing, and exercising. It seems that my personalized additions did not do much to change gpt-4o’s presets for what a standard afternoon entails. Rather than thinking outside of the box and potentially getting some things wrong, it seems that the model prefers to stick to the standards under the guise that most individuals could relate to the listed activities in some way, shape, or form.</p>
+<section id="personality-traits" class="level3">
+<h3 class="anchored" data-anchor-id="personality-traits">Personality Traits</h3>
+<ol type="1">
+<li><p><strong>Integrity and Honesty</strong>: Valuing honesty and having strong moral principles are often seen as ideal traits.</p></li>
+<li><p><strong>Ambition and Drive</strong>: The “American Dream” ethos values ambition, hard work, and the pursuit of success, often reflected in those described as ideal.</p></li>
+<li><p><strong>Empathy and Kindness</strong>: Being compassionate, kind, and understanding towards others is highly valued.</p></li>
+<li><p><strong>Resilience and Adaptability</strong>: The ability to bounce back from setbacks and adapt to change is considered admirable.</p></li>
+<li><p><strong>Open-mindedness</strong>: Embracing diversity and being open to new ideas are traits that align with American ideals of freedom and diversity.</p></li>
+<li><p><strong>Leadership and Charisma</strong>: Confidence and the ability to inspire others are often admired, especially in social and professional contexts.</p></li>
+</ol>
 </section>
-<section id="the-future" class="level1">
-<h1>The Future</h1>
-<p>After explaining my present to gpt-4o, I asked it to predict my future. After a day of classes and some school work balanced with relaxing, gpt-4o predicts that my evening will end in socializing, dinner, exercise, and more work. <img src="predictive_inferences_files/figure-html/8a483584-0990-4a17-bbf6-dea936e23a4e-1-ba450f47-692a-474e-84b6-079b136145bd.png" class="img-fluid" alt="Screenshot 2025-02-17 at 4.40.59 PM.png"></p>
-<p>Maybe it’s just me, but does my evening have to be so boring? Where’s the creativity and the fun! I want gpt-4o to predict an eventful evening for me rather than a seemingly endless loop of the same 3 activities for the morning, afternoon, and evening.</p>
-<p>I am curious to know if this is just the standard response for gpt-4o, or if other people’s days are more predictable than mine…</p>
+<section id="values" class="level3">
+<h3 class="anchored" data-anchor-id="values">Values</h3>
+<ol type="1">
+<li><p><strong>Freedom and Independence</strong>: Emphasizing personal liberty and independence can be seen as ideal, reflecting broader American values.</p></li>
+<li><p><strong>Community and Service</strong>: Contributing to the community and being involved in service can be valued, balancing individualism with a sense of social responsibility.</p></li>
+<li><p><strong>Innovation and Creativity</strong>: Valuing creativity and innovation reflects America’s strong history of entrepreneurship and technological advancement.</p></li>
+</ol>
+</section>
+<section id="conclusion" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion">Conclusion</h3>
+<p>The “ideal” human in American eyes might balance individuality with community caring, ambition with kindness, and traditional values with modern openness. It’s critical to remember that ideals are shaped by many factors, including personal beliefs, cultural backgrounds, and regional differences. As such, what one group may consider ideal might differ significantly from another’s perspective.</p>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>image_prompt <span class="op">=</span> <span class="st">"Please generate an image of a person based on these physical and personality traits: "</span> <span class="op">+</span> response</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.images.generate(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  model<span class="op">=</span><span class="st">"dall-e-3"</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  prompt<span class="op">=</span>image_prompt,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  size<span class="op">=</span><span class="st">"1024x1024"</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  quality<span class="op">=</span><span class="st">"standard"</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  n<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>image_url <span class="op">=</span> response.data[<span class="dv">0</span>].url</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[9], line 1</span>
+<span class="ansi-green-fg">----&gt; 1</span> image_prompt <span style="color:rgb(98,98,98)">=</span> <span style="color:rgb(175,0,0)" class="ansi-yellow-bg">"</span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">Please generate an image of a person based on these physical and personality traits: </span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">"</span><span class="ansi-yellow-bg"> </span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">+</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">response</span>
+<span class="ansi-green-fg ansi-bold">      2</span> response <span style="color:rgb(98,98,98)">=</span> client<span style="color:rgb(98,98,98)">.</span>images<span style="color:rgb(98,98,98)">.</span>generate(
+<span class="ansi-green-fg ansi-bold">      3</span>   model<span style="color:rgb(98,98,98)">=</span><span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">dall-e-3</span><span style="color:rgb(175,0,0)">"</span>,
+<span class="ansi-green-fg ansi-bold">      4</span>   prompt<span style="color:rgb(98,98,98)">=</span>image_prompt,
+<span class="ansi-green-fg">   (...)</span>
+<span class="ansi-green-fg ansi-bold">      7</span>   n<span style="color:rgb(98,98,98)">=</span><span style="color:rgb(98,98,98)">1</span>,
+<span class="ansi-green-fg ansi-bold">      8</span> )
+<span class="ansi-green-fg ansi-bold">     10</span> image_url <span style="color:rgb(98,98,98)">=</span> response<span style="color:rgb(98,98,98)">.</span>data[<span style="color:rgb(98,98,98)">0</span>]<span style="color:rgb(98,98,98)">.</span>url
+
+<span class="ansi-red-fg">TypeError</span>: can only concatenate str (not "ImagesResponse") to str</pre>
+</div>
+<p><img src="idealness_files/figure-html/317686be-8337-4415-8ff4-31008d7e42b0-1-0b8e5120-a2ab-4622-b606-39ff31d0f970.png" class="img-fluid" alt="img-bFr11fQdesUktv3XuZiGKpiD.png"> Wow.</p>
 
 
 </section>
