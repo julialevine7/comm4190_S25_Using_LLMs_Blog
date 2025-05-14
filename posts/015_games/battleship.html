@@ -155,6 +155,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </div>
                           <div class="quarto-categories">
                 <div class="quarto-category">LLMs</div>
+                <div class="quarto-category">Games</div>
               </div>
                   </div>
   </div>
@@ -191,12 +192,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="introduction" class="level3">
-<h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
 <p>Many users of OpenAIs models flaunt the idea that coding with the help of an LLM is so much easier and more efficient. For me, this is true about 50% of the time. For projects I’ve used LLMs to help me code, there are many times where it skips over a problem, induces a strange solution, or even sends me back the same code with no fixes! In order to test this, I’d like to see how well gpt-4o can create a fully python-based game from one prompt. I will use the classic turn-based game battleships as my example. Just for context, my CIS 1200 final project was to code battleships (without LLMs!) in Java, which never really worked…</p>
 </section>
-<section id="code" class="level3">
-<h3 class="anchored" data-anchor-id="code">Code</h3>
+<section id="code" class="level1">
+<h1>Code</h1>
 <p>I asked gpt-4o to make a battleship game in Python. Attached below is the code.</p>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -267,12 +268,14 @@ Guess Col (0-4):  2</code></pre>
 <pre><code>Guess Row (0-4):  4
 Guess Col (0-4):  1</code></pre>
 <p>You missed! O O O O O O O O O O O X O O O O O O O O O X X X O Game Over! The ship was at (2, 3)</p>
-</section>
 <section id="discussion" class="level3">
 <h3 class="anchored" data-anchor-id="discussion">Discussion</h3>
-<p>The game works really well! I was unable to find any issues with the gameplay, and the score board updating is consistent across plays. I am curious to see how well gpt-4o could perform in creating more complicated games.</p>
+<p>The game works really well! I was unable to find any issues with the gameplay, and the score board updating is consistent across plays. In terms of the code structure, gpt-4o seemed to organize everything very well in defined functions with controls for error messages and missing values. The comments added are descriptive but not overly so and the functions are well-named. The separation and indentations of the code are also on-par with normal code.</p>
+<p>Upon first glance, it seems that gpt-4o was able to execute this code well, likely due to the large number of coding examples for this game online.</p>
+<p>I am curious to see how well gpt-4o could perform in creating more complicated games. I’d also want to test making requests on aesthetic changes rather than functional changes, since I have experienced issues communicating aesthetic</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

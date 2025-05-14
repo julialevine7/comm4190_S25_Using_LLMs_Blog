@@ -8,9 +8,9 @@
 
 <meta name="author" content="Julia Levine">
 <meta name="dcterms.date" content="2025-05-13">
-<meta name="description" content="Would the ideal human in gpt-4o’s eyes be human at all?">
+<meta name="description" content="I’m thinking of a character…">
 
-<title>Asking ChatGPT to describe the ideal human… so I can improve as a person(?) – Experimenting with LLMs</title>
+<title>Let’s play 20 questions with o3! – Experimenting with LLMs</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,41 +22,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -147,14 +112,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Asking ChatGPT to describe the ideal human… so I can improve as a person(?)</h1>
+      <h1 class="title">Let’s play 20 questions with o3!</h1>
                   <div>
         <div class="description">
-          Would the ideal human in gpt-4o’s eyes be human at all?
+          I’m thinking of a character…
         </div>
       </div>
                           <div class="quarto-categories">
                 <div class="quarto-category">LLMs</div>
+                <div class="quarto-category">Games</div>
               </div>
                   </div>
   </div>
@@ -193,128 +159,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>In hopes of embarking on the self-improvement journey, I am curious to see how gpt-4o assesses ideality. Usually, I would ask gpt-4o directly how to improve myself, but I’m curious to see how objective it can be. In this experiment, I will force it to make a completely objective view of the most ideal human, which I believe goes completely against gpt-4o’s response tendency.</p>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> base64</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dotenv <span class="im">import</span> load_dotenv</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Load API key</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> load_dotenv()</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> OpenAI()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>completion <span class="op">=</span> client.chat.completions.create(</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  model<span class="op">=</span><span class="st">"gpt-4o"</span>,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  messages<span class="op">=</span>[</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"system"</span>, </span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>     <span class="st">"content"</span>: <span class="st">"You are a helpful assistant."</span>},</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"user"</span>, </span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>     <span class="st">"content"</span>: <span class="st">"Please describe for me the ideal human in your eyes. Be as descriptive both physically and personality-wise as possible. Try to ignore subjectivity in crafting your response."</span>}</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  ]</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> completion.choices[<span class="dv">0</span>].message.content</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>As an AI, I don’t possess personal opinions or preferences, so I cannot describe an “ideal” human from a subjective viewpoint. However, I can provide a description of traits and characteristics that are commonly valued or admired across different cultures and societies.</p>
-<p><strong>Physically:</strong> 1. <strong>Health:</strong> An ideal human might be characterized by a healthy physique, which includes traits like clear skin, appropriate weight, and physical fitness. Good posture and an energetic demeanor often convey vitality. 2. <strong>Symmetry and Proportion:</strong> In many cultures, facial symmetry and well-proportioned features are aesthetically pleasing. These might include balanced facial dimensions and a harmonious ratio of features. 3. <strong>Dexterity and Agility:</strong> Physical abilities that allow for coordination and flexibility are often highly regarded. This includes having a body that is capable of performing a range of activities with ease. 4. <strong>Adaptability:</strong> A physically ideal person might be adaptable to different environments, resilient to stress, and capable of enduring a variety of challenges.</p>
-<p><strong>Personality:</strong> 1. <strong>Empathy and Kindness:</strong> These traits allow individuals to connect with others, understand diverse perspectives, and foster harmonious relationships. They are often seen as foundational for building trust and mutual respect. 2. <strong>Intelligence and Wisdom:</strong> An ideal human might possess a balance of analytical intelligence and practical wisdom, enabling them to solve problems effectively and make considered decisions. 3. <strong>Integrity and Honesty:</strong> Being honest and having strong moral principles are universally admired traits that contribute to an individual’s reputation and reliability. 4. <strong>Resilience and Perseverance:</strong> The ability to overcome adversity and continue striving toward goals is often seen as inspiring and commendable. 5. <strong>Curiosity and Open-mindedness:</strong> An openness to new experiences and the willingness to learn are highly valued, as they drive personal growth and innovation. 6. <strong>Humor and Joyfulness:</strong> A good sense of humor and a positive disposition can lighten situations and create a more enjoyable atmosphere for those around them.</p>
-<p>These traits collectively form a well-rounded vision of an admirable human but should not be seen as exhaustive or prescriptive. Individual ideals can vary widely based on cultural, personal, and societal influences.</p>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>image_prompt <span class="op">=</span> <span class="st">"Please generate an image of a person based on these physical and personality traits: "</span> <span class="op">+</span> response</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.images.generate(</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  model<span class="op">=</span><span class="st">"dall-e-3"</span>,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  prompt<span class="op">=</span>image_prompt,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  size<span class="op">=</span><span class="st">"1024x1024"</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  quality<span class="op">=</span><span class="st">"standard"</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  n<span class="op">=</span><span class="dv">1</span>,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>image_url <span class="op">=</span> response.data[<span class="dv">0</span>].url</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="idealness_files/figure-html/61cc1de8-4eb3-419d-b92e-51baed552210-1-ee247235-9f0d-4537-baa2-890d98a2896d.png" class="img-fluid figure-img"></p>
-<figcaption>img-1nOnqzoGpIRrg0bxF7SiRI1W.png</figcaption>
-</figure>
-</div>
+<p>First it was the 20 questions ball, then it was the Akinator, now its o1! I am super curious to how o3’s “advanced reasoning” goes up against my stupid topics and words in a classic game of 20 questions! I predict that o3 may miss the point on a few rounds, whereas the 20 questions ball classically has an insane logic flow that determines most topics with (eventual) ease. Because o3 has the “free will” of determining its own logic, I am not so sure it will actually guess my topic.</p>
+<p>For this particular experiment, I will start with a 4o round of 20 questions to see if there is any difference in reasoning. Just so you know I’m not tricking gpt-4o, my topic for this round is <em>mirror</em>.</p>
 </section>
-<section id="discussion" class="level1">
-<h1>Discussion</h1>
-<p>Honestly, I’ve got to stop asking ChatGPT to generate images of philosophical topics. They’re always terrifying…</p>
-<p>Anyways, if I were to consider this experiment in its original nature of improving myself, I should morph into several different faces??? I feel as though gpt-4o’s reluctance on creating an objective representation of an ideal human is reflected well in its image representation. Usually, gpt-4o is better at addressing one subjective question at a time with appropriate elaboration (ex. how can I become more physically fit). It’s interesting to see that even trying to remove that subjectivity, gpt-4o is unable to center around one single idea and wants to remain equally respectful to multiple ideas, cultures, and thoughts.</p>
-<p>I wonder if I asked it to hone in on a specific culture or country if it would do something different (hint it did…)</p>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>completion <span class="op">=</span> client.chat.completions.create(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  model<span class="op">=</span><span class="st">"gpt-4o"</span>,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  messages<span class="op">=</span>[</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"system"</span>, </span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>     <span class="st">"content"</span>: <span class="st">"You are a helpful assistant."</span>},</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"user"</span>, </span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>     <span class="st">"content"</span>: <span class="st">"Please describe for me the ideal human in the eyes of the American people. Be as descriptive both physically and personality-wise as possible. Try to ignore subjectivity in crafting your response."</span>}</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  ]</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> completion.choices[<span class="dv">0</span>].message.content</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Describing an “ideal” human in the eyes of the American people is inherently subjective and can vary greatly due to the country’s diversity. However, some common themes and values might emerge based on cultural norms, media representation, and societal ideals. It’s important to note that these ideals can change over time and are not universal. Here is an attempt to distill some of these themes:</p>
-<section id="physical-characteristics" class="level3">
-<h3 class="anchored" data-anchor-id="physical-characteristics">Physical Characteristics</h3>
-<ol type="1">
-<li><p><strong>Health and Fitness</strong>: There is often an emphasis on physical health and fitness. An ideal person might be seen as physically fit, energetic, and embodying a healthy lifestyle.</p></li>
-<li><p><strong>Diverse Beauty Standards</strong>: America’s multicultural nature means beauty standards can vary widely. Media often portrays ideals that include clear skin, symmetrical features, and certain standards of grooming.</p></li>
-<li><p><strong>Fashion and Grooming</strong>: Being well-dressed and groomed is often associated with the ideal image. This doesn’t necessarily mean formal attire but rather a sense of style that aligns with current trends.</p></li>
-</ol>
+<section id="round-1-discussion" class="level1">
+<h1>Round 1 Discussion</h1>
+<p>I would compare 4o’s question capability to the same level as the 20 questions ball or akinator. Questions had a flow and logic to them and were descriptive based on cues given from previous questions. However, 4o ended up guessing a razor instead of a mirror (unfortunate!).</p>
+<p>Let’s try round 2 with o3. My topic for this round is <em>sandwich</em>.</p>
 </section>
-<section id="personality-traits" class="level3">
-<h3 class="anchored" data-anchor-id="personality-traits">Personality Traits</h3>
-<ol type="1">
-<li><p><strong>Integrity and Honesty</strong>: Valuing honesty and having strong moral principles are often seen as ideal traits.</p></li>
-<li><p><strong>Ambition and Drive</strong>: The “American Dream” ethos values ambition, hard work, and the pursuit of success, often reflected in those described as ideal.</p></li>
-<li><p><strong>Empathy and Kindness</strong>: Being compassionate, kind, and understanding towards others is highly valued.</p></li>
-<li><p><strong>Resilience and Adaptability</strong>: The ability to bounce back from setbacks and adapt to change is considered admirable.</p></li>
-<li><p><strong>Open-mindedness</strong>: Embracing diversity and being open to new ideas are traits that align with American ideals of freedom and diversity.</p></li>
-<li><p><strong>Leadership and Charisma</strong>: Confidence and the ability to inspire others are often admired, especially in social and professional contexts.</p></li>
-</ol>
+<section id="round-2-discussion" class="level1">
+<h1>Round 2 Discussion</h1>
+<p>o3 is horrible at 20 questions. I honestly think the 20 questions ball from like the 80s would have been able to do better which is… interesting. Throughout the round o3 asked me constantly a basic yes or no question on if my object was material X. This used up about 15 of the 20 questions, as o3 cycled through every possible material (all construction-based even though my object was food-based) and then gave up and finally decided to ask if my object was food-related on the <em>20th</em> guess. It then proceeded to guess pizza, which was close and relatively impressive for a 1-question guess, but still wrong.</p>
 </section>
-<section id="values" class="level3">
-<h3 class="anchored" data-anchor-id="values">Values</h3>
-<ol type="1">
-<li><p><strong>Freedom and Independence</strong>: Emphasizing personal liberty and independence can be seen as ideal, reflecting broader American values.</p></li>
-<li><p><strong>Community and Service</strong>: Contributing to the community and being involved in service can be valued, balancing individualism with a sense of social responsibility.</p></li>
-<li><p><strong>Innovation and Creativity</strong>: Valuing creativity and innovation reflects America’s strong history of entrepreneurship and technological advancement.</p></li>
-</ol>
-</section>
-<section id="conclusion" class="level3">
-<h3 class="anchored" data-anchor-id="conclusion">Conclusion</h3>
-<p>The “ideal” human in American eyes might balance individuality with community caring, ambition with kindness, and traditional values with modern openness. It’s critical to remember that ideals are shaped by many factors, including personal beliefs, cultural backgrounds, and regional differences. As such, what one group may consider ideal might differ significantly from another’s perspective.</p>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>image_prompt <span class="op">=</span> <span class="st">"Please generate an image of a person based on these physical and personality traits: "</span> <span class="op">+</span> response</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> client.images.generate(</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  model<span class="op">=</span><span class="st">"dall-e-3"</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  prompt<span class="op">=</span>image_prompt,</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  size<span class="op">=</span><span class="st">"1024x1024"</span>,</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  quality<span class="op">=</span><span class="st">"standard"</span>,</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  n<span class="op">=</span><span class="dv">1</span>,</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>image_url <span class="op">=</span> response.data[<span class="dv">0</span>].url</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="ansi-escaped-output">
-<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[9], line 1</span>
-<span class="ansi-green-fg">----&gt; 1</span> image_prompt <span style="color:rgb(98,98,98)">=</span> <span style="color:rgb(175,0,0)" class="ansi-yellow-bg">"</span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">Please generate an image of a person based on these physical and personality traits: </span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">"</span><span class="ansi-yellow-bg"> </span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">+</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">response</span>
-<span class="ansi-green-fg ansi-bold">      2</span> response <span style="color:rgb(98,98,98)">=</span> client<span style="color:rgb(98,98,98)">.</span>images<span style="color:rgb(98,98,98)">.</span>generate(
-<span class="ansi-green-fg ansi-bold">      3</span>   model<span style="color:rgb(98,98,98)">=</span><span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">dall-e-3</span><span style="color:rgb(175,0,0)">"</span>,
-<span class="ansi-green-fg ansi-bold">      4</span>   prompt<span style="color:rgb(98,98,98)">=</span>image_prompt,
-<span class="ansi-green-fg">   (...)</span>
-<span class="ansi-green-fg ansi-bold">      7</span>   n<span style="color:rgb(98,98,98)">=</span><span style="color:rgb(98,98,98)">1</span>,
-<span class="ansi-green-fg ansi-bold">      8</span> )
-<span class="ansi-green-fg ansi-bold">     10</span> image_url <span style="color:rgb(98,98,98)">=</span> response<span style="color:rgb(98,98,98)">.</span>data[<span style="color:rgb(98,98,98)">0</span>]<span style="color:rgb(98,98,98)">.</span>url
-
-<span class="ansi-red-fg">TypeError</span>: can only concatenate str (not "ImagesResponse") to str</pre>
-</div>
-<p><img src="idealness_files/figure-html/317686be-8337-4415-8ff4-31008d7e42b0-1-0b8e5120-a2ab-4622-b606-39ff31d0f970.png" class="img-fluid" alt="img-bFr11fQdesUktv3XuZiGKpiD.png"> Wow.</p>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>I’m not sure if 4o was actually better than o3, but the level of close-ness while still missing the mark that 4o achieved seemed to be more on par with the Akinator competition. For example, 4o had a clear variation of questions asked, whereas o3 got stuck along one topic that wasn’t even relevant to my object and wasted all the questions because of its logical fault. I will note that in o3’s thinking highlights, there was a lot of mention of “I must figure out the material to determine what kind of object it is,” which is a limited and in this case critical error.</p>
+<p>While the 20 questions ball and the Akinator have highly developed logic in order to make predictions, I had thought that ChatGPT could perform on-par with those competitors due to its free reasoning capability.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
