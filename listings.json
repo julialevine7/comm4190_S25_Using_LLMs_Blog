@@ -3,12 +3,12 @@
     "listing": "/index.html",
     "items": [
       "/posts/013_reflective/reflective.html",
+      "/posts/020_recipes/recipes.html",
       "/posts/016_idealness/idealness.html",
       "/posts/018_20qs/20qs.html",
       "/posts/017_likeness/likeness.html",
       "/posts/019_palindrome/palindromes.html",
       "/posts/015_games/battleship.html",
-      "/posts/020_recipes/recipes.html",
       "/posts/014_4o_tasks/tasks.html",
       "/posts/012_dog_classifier/dog_classifier.html",
       "/posts/011_translating/translating.html",
